@@ -1,28 +1,27 @@
 import * as React from "react";
-import {StyleSheet, View, Text, TextInput, Button } from "react-native";
+import {StyleSheet, View, Text, TextInput } from "react-native";
 import Header from "../../src/components/header";
-import { router } from "expo-router";
-import CustomButton from "../../src/components/CustomButton";
+import { Button } from "react-native-elements";
 
-const ForgotPass = () => {
+const ForgotPass2 = () => {
+
     return(
         <View style={styles.rectangleView}>
             <Header/>
-            <Text style={styles.labelTitle}>Ingresa tu correo para verificar su existencia</Text>
+            <Text style={styles.labelTitle}>Ingresa tu nueva contraseña</Text>
             
-            <View style={styles.emailContainer}>
-                <Text style={styles.label}>Correo</Text>
+            <View style={styles.passContainer}>
+                <Text style={styles.label}>Nueva Contraseña</Text>
+
                 <TextInput style={styles.input} keyboardType="email-address" />
 
-                
+                <Text style={styles.label}>Confirma tu contraseña</Text>
+
+                <TextInput style={styles.input} keyboardType="email-address" />
             </View>
 
-            <CustomButton title={"Verificar"}
-                    containerStyles={"bg-[#317B9B]"}
-                    textStyles={"text-lg font-semibold text-center mt-2 text-white"}
-                    onPress={router.push("/newpassword")}
-            />
-
+            <Button title={"Cambiar"}
+                    buttonStyle={styles.verButton}/>
         </View>
     )
 }
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
     	width: "100%",
     },
     labelTitle: {
-        fontSize: 24,
+        fontSize: 30,
         fontFamily: "Roboto",
         color: "#317b9b",
         textAlign: "center",
@@ -44,17 +43,19 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     emailContainer: {
-        marginTop: 80, 
-        width: "100%",
-        
+        marginTop: 100, 
+        marginLeft: 57,
     },
     label: {
-        fontSize: 24,
+        fontSize: 28,
         fontFamily: "Roboto",
         color: "#317b9b",
         textAlign: "left",
         marginBottom: 20,
-        marginLeft: 50,
+        marginLeft: 50
+    },
+    passContainer: {
+        marginTop: 80,
     },
     input: {
         height: 60,
@@ -65,16 +66,18 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         display: 'flex',
         alignSelf: 'center'
+
     },
     verButton: {
-        backgroundColor: "#16557a",
+        backgroundColor: '#16557a',
         borderRadius: 10,
         height: 50,
-        width: "60%",
+        width: "80%",
         height: 50,
-        marginTop: 20,
-        marginLeft: 25,
+        marginTop: 30,
+        display: 'flex',
+        alignSelf: 'center'
     }
 })
 
-export default ForgotPass;
+export default ForgotPass2;

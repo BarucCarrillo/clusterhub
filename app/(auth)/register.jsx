@@ -1,13 +1,11 @@
 import * as React from "react";
 import {StyleSheet, View, Text, TextInput, ScrollView} from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { Button } from 'react-native-elements';
+import { router } from "expo-router";
 import Header from "../../src/components/header";
 
 
 const Register = () => {
-    const navigation = useNavigation(); 
-
     return(
             <ScrollView style={styles.rectangleView}>
                 <Header/>
@@ -31,6 +29,7 @@ const Register = () => {
 
 
                     <View style={styles.buttonContainer}>
+                        
                         <Button title="Registrar" buttonStyle={styles.registerButton} />
 
                         <View style={styles.dividerContainer}>
@@ -42,8 +41,9 @@ const Register = () => {
                         <Button 
                         title="Iniciar Sesión" 
                         buttonStyle={styles.loginButton}
-                        // onPress={() => navigation.navigate('Login')} 
+                        onPress={() => router.push("/index")} 
                         />
+
                     </View>
                 </View>
             </ScrollView>

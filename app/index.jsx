@@ -6,7 +6,6 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { Button } from "react-native-elements";
 import { router } from "expo-router";
 import Header from "../src/components/header";
 import CustomButton from "../src/components/CustomButton";
@@ -39,12 +38,9 @@ const App = () => {
         containerStyles={"bg-[#317B9B]"}
         borderColor={"secondary"}
         textStyles={"text-lg font-semibold text-center mt-2 text-white"}
-        handlePress={() => router.push("/home")}
-
-        
-        >
-
+        handlePress={() => router.push("/home")}>
         </CustomButton>
+        
         <TouchableOpacity
         onPress={() => router.push("/forgotpass")}
         >
@@ -63,7 +59,7 @@ const App = () => {
           borderColor={"secondary"}
           textColor={"secondary"}
           textStyles={"text-lg font-semibold text-center mt-2 text-[#317B9B]"}
-          handlePress={() => router.push("/register")}
+          handlePress={() => router.push("/settings")}
         />
       </View>
     </View>
