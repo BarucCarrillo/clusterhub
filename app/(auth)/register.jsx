@@ -2,7 +2,7 @@ import * as React from "react";
 import {StyleSheet, View, Text, TextInput, ScrollView} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from 'react-native-elements';
-import Header from "../components/header";
+import Header from "../../src/components/header";
 
 
 const Register = () => {
@@ -42,7 +42,8 @@ const Register = () => {
                         <Button 
                         title="Iniciar Sesión" 
                         buttonStyle={styles.loginButton}
-                        onPress={() => navigation.navigate('Login')} />
+                        // onPress={() => navigation.navigate('Login')} 
+                        />
                     </View>
                 </View>
             </ScrollView>
