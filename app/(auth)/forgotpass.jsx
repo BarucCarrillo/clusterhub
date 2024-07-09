@@ -1,7 +1,7 @@
 import * as React from "react";
 import {StyleSheet, View, Text, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Header from "../components/header";
+import Header from "../../src/components/header";
 
 const ForgotPass = () => {
     const navigation = useNavigation();

@@ -7,13 +7,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Button } from "react-native-elements";
-import { Link } from "expo-router";
-import { useNavigation } from "@react-navigation/native";
-import Header from "../components/header";
+import { router } from "expo-router";
+import Header from "../src/components/header";
+import CustomButton from "../src/components/CustomButton";
+import CustomButtonWhite from "../src/components/CustomButtonWhite";
 
-const Login = () => {
-  const navigation = useNavigation();
-
+const App = () => {
   return (
     <View style={styles.rectangleView}>
       <Header />
@@ -33,12 +32,23 @@ const Login = () => {
             secureTextEntry={true}
           />
         </View>
-          <Button title="Iniciar" buttonStyle={styles.loginButton}
-          
-          onPress={()=> navigation.navigate("Home")}
-          />
-        <TouchableOpacity onPress={() => navigation.navigate("ForgotPass")}>
-          <Text style={styles.forgotPassword}>Olvide mi contraseña</Text>
+       
+        
+        <CustomButton
+        title={"Iniciar"}
+        containerStyles={"bg-[#317B9B]"}
+        borderColor={"secondary"}
+        textStyles={"text-lg font-semibold text-center mt-2 text-white"}
+        handlePress={() => router.push("/home")}
+
+        
+        >
+
+        </CustomButton>
+        <TouchableOpacity
+        onPress={() => router.push("/forgotpass")}
+        >
+          <Text className="" style={styles.forgotPassword}>Olvide mi contraseña</Text>
         </TouchableOpacity>
 
         <View style={styles.dividerContainer}>
@@ -47,12 +57,13 @@ const Login = () => {
           <View style={styles.divider} />
         </View>
 
-        <Button
-          title="Registrar"
-          type="outline"
-          buttonStyle={styles.registerButton}
-          containerStyle={styles.buttonContainer}
-          onPress={() => navigation.navigate("Register")}
+        <CustomButtonWhite
+          title={"Registrarme"}
+          background={"secondary"}
+          borderColor={"secondary"}
+          textColor={"secondary"}
+          textStyles={"text-lg font-semibold text-center mt-2 text-[#317B9B]"}
+          handlePress={() => router.push("/register")}
         />
       </View>
     </View>
@@ -72,8 +83,8 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 60,
-    borderColor: "#ccc",
-    borderWidth: 3,
+    borderColor: "#317B9B",
+    borderWidth: 2,
     borderRadius: 10,
     paddingHorizontal: 10,
     marginBottom: 20,
@@ -90,7 +101,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginRight: 60,
     marginBottom: 20,
-    fontWeight: "bold",
+    fontWeight: "semibold",
   },
   loginButton: {
     backgroundColor: "#16557a",
@@ -117,7 +128,7 @@ const styles = StyleSheet.create({
   divider: {
     flex: 1,
     height: 1,
-    backgroundColor: "#ccc",
+    backgroundColor: "#317B9B",
   },
   orText: {
     marginHorizontal: 10,
@@ -135,4 +146,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default App;
