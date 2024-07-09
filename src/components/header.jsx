@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Image } from "react-native";
 import { Header, } from "@rneui/base";
 
 export default () => {
@@ -13,7 +12,7 @@ export default () => {
         style: { color: "#317B9B",fontSize: 38, fontWeight: 'bold', display: 'flex', alignSelf: 'center' }
       }}
       centerContainerStyle={{}}
-      containerStyle={{ width: "100%", height: 150 }}
+      containerStyle={{ width: "100%", height: 200 }}
       leftContainerStyle={{}}
       linearGradientProps={{}}
       placement="left"

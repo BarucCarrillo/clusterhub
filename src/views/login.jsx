@@ -1,6 +1,6 @@
 import * as React from "react";
 import {StyleSheet, View, Text, TextInput, TouchableOpacity} from "react-native";
-import { Button, Icon } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import Header from "../components/header";
 
@@ -22,7 +22,7 @@ const Login = () => {
 
                 <Button title="Iniciar" buttonStyle={styles.loginButton} />
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('ForgotPass')}>
                     <Text style={styles.forgotPassword}>Olvide mi contraseña</Text>
                 </TouchableOpacity>
 
