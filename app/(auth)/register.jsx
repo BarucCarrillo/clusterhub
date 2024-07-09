@@ -41,7 +41,7 @@ const Register = () => {
                         <Button 
                         title="Iniciar Sesión" 
                         buttonStyle={styles.loginButton}
-                        onPress={() => router.push("/index")} 
+                        onPress={() => router.push("/")} 
                         />
 
                     </View>

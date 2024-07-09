@@ -59,7 +59,7 @@ const App = () => {
           borderColor={"secondary"}
           textColor={"secondary"}
           textStyles={"text-lg font-semibold text-center mt-2 text-[#317B9B]"}
-          handlePress={() => router.push("/settings")}
+          handlePress={() => router.push("/register")}
         />
       </View>
     </View>

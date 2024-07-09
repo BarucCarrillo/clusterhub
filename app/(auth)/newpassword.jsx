@@ -3,7 +3,7 @@ import {StyleSheet, View, Text, TextInput } from "react-native";
 import Header from "../../src/components/header";
 import { Button } from "react-native-elements";
 
-const ForgotPass2 = () => {
+const newPassword = () => {
 
     return(
         <View style={styles.rectangleView}>
@@ -80,4 +80,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ForgotPass2;
+export default newPassword;

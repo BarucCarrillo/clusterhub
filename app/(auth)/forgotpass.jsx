@@ -20,7 +20,7 @@ const ForgotPass = () => {
             <CustomButton title={"Verificar"}
                     containerStyles={"bg-[#317B9B]"}
                     textStyles={"text-lg font-semibold text-center mt-2 text-white"}
-                    onPress={router.push("/newpassword")}
+                    handlePress={() => router.push("/newpassword")}
             />
 
         </View>
