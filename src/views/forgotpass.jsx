@@ -1,13 +1,15 @@
-import * as React from React;
+import * as React from "react";
 import {StyleSheet, View, Text, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Header from "../components/header";
 
 const ForgotPass = () => {
     const navigation = useNavigation();
 
     return(
         <View style={styles.rectangleView}>
-            <Text style={styles.title}>Forgot Password</Text>
+            <Header/>
+            <Text style={styles.title}>Ingresa tu correo para verificar su existencia</Text>
         </View>
     )
 }
