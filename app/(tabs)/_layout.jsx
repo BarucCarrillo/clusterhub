@@ -4,7 +4,7 @@ import React from "react";
 import {icons} from "../../constants";
 
 const TabIcon = ({icon,color,name,focused}) => {
-  return <View className="items-center justify-center gap-2">
+  return <View className="items-center justify-center gap-2 mt-3">
 <Image
 source={icon}
 resizeMode="contain"
@@ -27,13 +27,13 @@ const TabsLayout = () => {
       <Tabs
         screenOptions={{
           tabBarShowLabel: false,
-          tabBarActiveTintColor: "#000",
-          tabBarActiveTintColor: "#000",
+          tabBarInactiveTintColor: "#27627B",
+          tabBarActiveTintColor: "#317B9B",
           tabBarStyle: {
-            backgroundColor: "#fff",
+            backgroundColor: "#95D7CA",
             borderTopWidth: 1,
-            borderTopColor: "#000",
-            height: 84,
+            borderTopColor: "#95D7CA",
+            height: 85,
           },
         }}
       >
@@ -47,35 +47,40 @@ const TabsLayout = () => {
              <TabIcon
              icon={icons.panel}
               color={color}
-              name="Panel"
+              name="Paneles"
               focused={focused}
              />
             ),
           }}
         />
 
-        <Tabs.Screen
+<Tabs.Screen
           name="alerts"
           options={{
             title: "Alerts",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
-              <View>
-                <Text>Alert</Text>
-              </View>
+             <TabIcon
+             icon={icons.alert}
+              color={color}
+              name="Notificaciones"
+              focused={focused}
+             />
             ),
           }}
         />
-
         <Tabs.Screen
           name="home"
           options={{
             title: "Home",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
-              <View>
-                <Text>Home</Text>
-              </View>
+              <TabIcon
+              icon={icons.home}
+               color={color}
+               name="Inicio"
+               focused={focused}
+              />
             ),
           }}
         />
@@ -86,9 +91,12 @@ const TabsLayout = () => {
             title: "Config",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
-              <View>
-                <Text>Gear</Text>
-              </View>
+              <TabIcon
+             icon={icons.config}
+              color={color}
+              name="Configuración"
+              focused={focused}
+             />
             ),
           }}
         />
