@@ -1,24 +1,19 @@
-import * as React from "react";
-import { Header, } from "@rneui/base";
+import { View, Text, Image } from "react-native";
+import React from "react";
+import { svg } from "../../constants";
 
-export default () => {
+const Header = ({title}) => {
   return (
-    <Header
-      backgroundColor="#95D7CA"
-      backgroundImageStyle={{}}
-      barStyle="default"
-      centerComponent={{
-        text: "CLUSTER HUB",
-        style: { color: "#317B9B",fontSize: 38, fontWeight: 'bold', display: 'flex', alignSelf: 'center' }
-      }}
-      centerContainerStyle={{}}
-      containerStyle={{ width: "100%", height: 200 }}
-      leftContainerStyle={{}}
-      linearGradientProps={{}}
-      placement="left"
-      rightContainerStyle={{}}
-      statusBarProps={{}}
-    />
-  );
-}
+    <>
+      <View className="  flex sticky  ">
 
+        <Text className="text-3xl font-bold text-center justify-center ">
+          {title}
+        </Text>
+      </View>
+      
+    </>
+  );
+};
+
+export default Header;

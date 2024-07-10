@@ -45,7 +45,38 @@ const images = [
         title: 'Almacen',
         description: 'El almacén está superando los 30 grados. Deberías abrir la puerta o ventanas para que circule el aire.',
         image: temperature_low
-    }
+    },
+    {
+        id: 7,
+        title: 'Almacen',
+        description: 'El almacén está superando los 30 grados. Deberías abrir la puerta o ventanas para que circule el aire.',
+        image: sunrise
+    },
+    {
+        id: 8,
+        title: 'Almacen',
+        description: 'El almacén está superando los 30 grados. Deberías abrir la puerta o ventanas para que circule el aire.',
+        image: sunrise2
+    },
+    {
+        id: 9,
+        title: 'Almacen',
+        description: 'El almacén está superando los 30 grados. Deberías abrir la puerta o ventanas para que circule el aire.',
+        image: sunset
+    },
+    {
+        id: 10,
+        title: 'Almacen',
+        description: 'El almacén está superando los 30 grados. Deberías abrir la puerta o ventanas para que circule el aire.',
+        image: sunset2
+    },
+    {
+        id: 11,
+        title: 'Almacen',
+        description: 'El almacén está superando los 30 grados. Deberías abrir la puerta o ventanas para que circule el aire.',
+        image: temperature
+    },
+   
 ];
 
 export default images;

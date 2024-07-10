@@ -10,12 +10,17 @@ import { router } from "expo-router";
 import Header from "../src/components/header";
 import CustomButton from "../src/components/CustomButton";
 import CustomButtonWhite from "../src/components/CustomButtonWhite";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const App = () => {
   return (
+    <>
+    
+    
     <View style={styles.rectangleView}>
-      <Header />
-      <View style={styles.formContainer}>
+      <Text className="text-secondary text-3xl mt-10 text-center font-semibold">Ingreso</Text>
+
+      <View className="" style={styles.formContainer}>
         <Text style={styles.label}>Correo</Text>
         <TextInput
           style={styles.input}
@@ -31,20 +36,19 @@ const App = () => {
             secureTextEntry={true}
           />
         </View>
-       
-        
+
         <CustomButton
-        title={"Iniciar"}
-        containerStyles={"bg-[#317B9B]"}
-        borderColor={"secondary"}
-        textStyles={"text-lg font-semibold text-center mt-2 text-white"}
-        handlePress={() => router.push("/home")}>
-        </CustomButton>
-        
-        <TouchableOpacity
-        onPress={() => router.push("/forgotpass")}
-        >
-          <Text className="" style={styles.forgotPassword}>Olvide mi contraseña</Text>
+          title={"Iniciar"}
+          containerStyles={"bg-[#317B9B]"}
+          borderColor={"secondary"}
+          textStyles={"text-lg font-semibold text-center mt-2 text-white"}
+          handlePress={() => router.push("/home")}
+        ></CustomButton>
+
+        <TouchableOpacity onPress={() => router.push("/forgotpass")}>
+          <Text className="" style={styles.forgotPassword}>
+            Olvide mi contraseña
+          </Text>
         </TouchableOpacity>
 
         <View style={styles.dividerContainer}>
@@ -63,6 +67,7 @@ const App = () => {
         />
       </View>
     </View>
+    </>
   );
 };
 
