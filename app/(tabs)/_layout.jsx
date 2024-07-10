@@ -26,6 +26,7 @@ const TabsLayout = () => {
     <>
       <Tabs
         screenOptions={{
+          
           tabBarShowLabel: false,
           tabBarInactiveTintColor: "#27627B",
           tabBarActiveTintColor: "#317B9B",
@@ -43,6 +44,7 @@ const TabsLayout = () => {
           options={{
             title: "Panel",
             headerShown: false,
+            
             tabBarIcon: ({ color, focused }) => (
              <TabIcon
              icon={icons.panel}
@@ -100,7 +102,7 @@ const TabsLayout = () => {
             ),
           }}
         />
-
+        
       </Tabs>
     </>
   );
