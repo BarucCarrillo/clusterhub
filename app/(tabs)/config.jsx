@@ -10,10 +10,12 @@ const Config = () => {
       <View style={styles.btnContainer}>
         <Button title="Información Personal"
                 buttonStyle={styles.btnConfig}
-                titleStyle={{color:"#317b9b", fontSize: 28}}/>
+                titleStyle={{color:"#317b9b", fontSize: 28}}
+                onPress={() => router.push('/infoConfig')}/>
         <Button title="Cambiar Contraseña"
                 buttonStyle={styles.btnConfig}
-                titleStyle={{color:"#317b9b", fontSize: 28}}/>
+                titleStyle={{color:"#317b9b", fontSize: 28}}
+                onPress={() => router.push('/newpassword')}/>
         <Button title="Cerrar Sesión"
                 buttonStyle={styles.btnConfig}
                 titleStyle={{color:"#317b9b", fontSize: 28}}
