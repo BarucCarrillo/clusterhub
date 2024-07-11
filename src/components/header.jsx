@@ -6,7 +6,7 @@ const Header = ({ title }) => {
   return (
     <>
       <View className="flex sticky ">
-        <Text className="text-2xl font-bold text-center justify-center text-secondary ">
+        <Text className="text-2xl font-bold text-center justify-center text-secondary " style={{marginTop: 15, fontSize: 32}}>
           {title}
         </Text>
       </View>

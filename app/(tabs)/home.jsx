@@ -7,72 +7,78 @@ import {
   Platform,
 } from "react-native";
 import React from "react";
-import { StatusBar } from "expo-status-bar";
-import HomeCardDash from "../../src/components/HomeCardDash";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { images, svg } from "../../constants";
-import CustomButton from "../../src/components/CustomButton";
+import { Card, Icon } from "react-native-elements";
 import Header from "../../src/components/header";
+
 const Home = () => {
   return (
     <>
       <SafeAreaView className="h-full">
-        <View
-          className="bg-back"
-        >
-          <Header title={"Inicio"} />
-          <FlatList
-            className=" "
-            data={images.slice(0, 6)} // Render only the first 6 items
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => {
-              return (
-                <>
-                  <HomeCardDash
-                    id={item.id}
-                    title={item.title}
-                    description={item.description}
-                    image={item.image}
-                  />
-                </>
-              );
-            }}
-            ListHeaderComponent={() => {
-              return (
-                <View className="flex items-center justify-center sticky p-4">
-                  <Text className="text-header text-center justify-center items-center text-xl">
-                    Estos son los paneles que tienes marcados como favoritos ✨
-                  </Text>
-                </View>
-              );
-            }}
-            ListEmptyComponent={() => {
-              return (
-                <>
-                  <CustomButton
-                    title="Agregar panel"
-                    containerStyles={"bg-[#317B9B]"}
-                    textStyles={
-                      "text-lg font-semibold text-center mt-2 text-white"
-                    }
-                    handlePress={() => router.push("/addpanel")}
-                  />
-                  <Text
-                    className={`text-secondary text-center text-2xl my-10 ${
-                      true ? "h-screen" : ""
-                    }`}
-                  >
-                    No hay paneles disponibles
-                  </Text>
-                </>
-              );
-            }}
-          />
-          <></>
+        <View>
+          <Header title={'Ubicación'}/>
+            <Image style={styles.img} source={{uri:'https://img.freepik.com/free-vector/global-warming-concept-illustration_114360-8510.jpg?t=st=1720730993~exp=1720734593~hmac=c75bdc5ff329378c9b8fb51de50dc483bf20e95508a9ce487d3e2c19c5cca884&w=996',}}></Image>
+            <Text style={styles.textTittle}>NIVEL DE POLVO Y CONTAMINACIÓN</Text>
+            <Text style={styles.textFav}>Favorito 
+            <Icon
+              name='heart'
+              type='font-awesome'
+              color='#317B9B'
+              onPress={() => console.log('hello')} /></Text>
+            <Text style={styles.textInfo}>INFORMACIÓN ADICIONAL</Text>
+            <Text style={styles.textRecom}>RECOMENDACIONES</Text>
         </View>
       </SafeAreaView>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  textTittle: {
+    color: "#317B9B", 
+    fontWeight: 'bold', 
+    textAlign: 'center',
+    fontSize: 32,
+    marginTop: 15,
+  },
+  textFav: {
+    color: "#317B9B", 
+    fontWeight: 'bold', 
+    textAlign: 'left',
+    marginLeft: 35,
+    fontSize: 28,
+    marginTop: 25,
+    marginBottom: 15,
+  },
+  textInfo: {
+    color: "#317B9B", 
+    fontWeight: 'bold', 
+    textAlign: 'center',
+    fontSize: 30,
+    marginTop: 15,
+  },
+  textRecom: {
+    color: "#317B9B", 
+    fontWeight: 'bold', 
+    textAlign: 'center',
+    fontSize: 30,
+    marginTop: 15,
+  },
+  textUbi: {
+    color: "#317B9B", 
+    fontWeight: 'bold', 
+    textAlign: 'center',
+    fontSize: 32,
+    marginTop: 25,
+  },
+  img: {
+    width: 250,
+    height: 250,
+    marginTop: 25,
+    display: 'flex',
+    alignSelf: 'center',
+    borderRadius: 140,
+  }
+})
 
 export default Home;

@@ -38,10 +38,10 @@ const styles = StyleSheet.create({
       fontFamily: "Roboto",
       color: "#317b9b",
       textAlign: 'center',
-      marginTop: 30
+      marginTop: 50,
     },
     btnContainer: {
-      marginTop: 100,
+      marginTop: 10,
     },
     btnConfig: {
       borderRadius: 8,
@@ -54,12 +54,12 @@ const styles = StyleSheet.create({
       color: "#317b9b",
     },
     img: {
-      width: "45%",
-      height: "25%",
-      marginTop: 25,
+      width: "48%",
+      height: "35%",
+      marginTop: 35,
       display: 'flex',
       alignSelf: 'center',
-      borderRadius: 100,
+      borderRadius: 120,
   }
 })
 
