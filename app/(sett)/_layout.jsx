@@ -5,8 +5,10 @@ const settLayout = () =>{
     return(
         <>
             <Stack>
-                <Stack.Screen/>                 
+                <Stack.Screen name='infoConfig' options={{ headerShown: false }}/>                 
             </Stack>
         </>
-    );
-};
+    )
+}
+
+export default settLayout;

@@ -1,25 +1,33 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native'
 import { Button } from 'react-native-elements/dist/buttons/Button'
 import React from 'react'
 import { router } from 'expo-router'
 
 const Config = () => {
   return (
-    <View>
+   <SafeAreaView>
+
+   <View>
       <Text style={styles.tittle}>Configuración</Text>
+      <Image style={styles.img} source={{uri:'https://th.bing.com/th/id/OIP.NnQzuZFcKjxCImErUgu_fwHaE7?rs=1&pid=ImgDetMain',}}></Image>
+
       <View style={styles.btnContainer}>
         <Button title="Información Personal"
                 buttonStyle={styles.btnConfig}
-                titleStyle={{color:"#317b9b", fontSize: 28}}/>
+                titleStyle={{color:"#317b9b", fontSize: 28}}
+                onPress={() => router.push('/infoConfig')}/>
         <Button title="Cambiar Contraseña"
                 buttonStyle={styles.btnConfig}
-                titleStyle={{color:"#317b9b", fontSize: 28}}/>
+                titleStyle={{color:"#317b9b", fontSize: 28}}
+                onPress={()=> router.push('/newpassword')}/>
         <Button title="Cerrar Sesión"
                 buttonStyle={styles.btnConfig}
                 titleStyle={{color:"#317b9b", fontSize: 28}}
                 onPress={()=> router.push('/')}/>
       </View>
     </View>
+ </SafeAreaView>
+
   )
 }
 
@@ -44,7 +52,15 @@ const styles = StyleSheet.create({
       display: 'flex',
       alignSelf: 'center',
       color: "#317b9b",
-    }
+    },
+    img: {
+      width: "45%",
+      height: "25%",
+      marginTop: 25,
+      display: 'flex',
+      alignSelf: 'center',
+      borderRadius: 100,
+  }
 })
 
 export default Config

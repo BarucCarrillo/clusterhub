@@ -2,6 +2,7 @@ import * as React from "react";
 import {StyleSheet, View, Text, TextInput } from "react-native";
 import Header from "../../src/components/header";
 import { Button } from "react-native-elements";
+import { router } from "expo-router";
 
 const newPassword = () => {
 
@@ -21,7 +22,8 @@ const newPassword = () => {
             </View>
 
             <Button title={"Cambiar"}
-                    buttonStyle={styles.verButton}/>
+                    buttonStyle={styles.verButton}
+                    onPress={() => router.push('/')}/>
         </View>
     )
 }

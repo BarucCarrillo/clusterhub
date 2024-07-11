@@ -7,7 +7,7 @@ const Header = ({title}) => {
     <>
       <View className="  flex sticky  ">
 
-        <Text className="text-3xl font-bold text-center justify-center ">
+        <Text className="text-3xl font-bold text-center justify-center text-secondary ">
           {title}
         </Text>
       </View>
