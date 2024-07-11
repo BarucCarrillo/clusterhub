@@ -38,20 +38,7 @@ const Home = () => {
                   <Text className="text-header text-center justify-center items-center text-xl">
                     Estos son los paneles que tienes marcados como favoritos ✨
                   </Text>
-
-                  <CustomButton
-                    title={"Ver todos los paneles"}
-                    containerStyles={"bg-[#317B9B]"}
-                    borderColor={"secondary"}
-                    textStyles={
-                      "text-lg font-semibold text-center mt-2 text-white"
-                    }
-                    handlePress={() => router.push("/home")}
-                  />
-                  <Text className="text-sm text-center my-2 text-secondary   ">
-                    Aqui podras encontrar todos los paneles que tienes
-                    disponibles 👆
-                  </Text>
+                 
                 </View>
               );
             }}
