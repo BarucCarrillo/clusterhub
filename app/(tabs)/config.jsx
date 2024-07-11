@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
       fontFamily: "Roboto",
       color: "#317b9b",
       textAlign: 'center',
-      marginTop: 35
+      marginTop: 50,
     },
     btnContainer: {
       marginTop: 10,

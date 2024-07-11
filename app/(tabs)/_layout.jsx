@@ -9,7 +9,7 @@ const TabIcon = ({icon,color,name,focused}) => {
 source={icon}
 resizeMode="contain"
 tintColor={color}
-className="w-6 h-6"
+className="w-12 h-12"
 />
 
 <Text className={`${focused ? "font-semibold" : "font-normal"}text-xs`}
@@ -32,9 +32,9 @@ const TabsLayout = () => {
           tabBarActiveTintColor: "#317B9B",
           tabBarStyle: {
             backgroundColor: "#95D7CA",
-            paddingTop: Platform.OS === "ios" ? 20 : 0,
+            paddingTop: Platform.OS === "ios" ? 20 : 20,
             height: 
-            Platform.OS === "ios" ? 100 : 84,
+            Platform.OS === "ios" ? 100 : 80,
           },
         }}
       >
@@ -49,7 +49,7 @@ const TabsLayout = () => {
              <TabIcon
              icon={icons.panel}
               color={color}
-              name="Paneles"
+              //name="Paneles"
               focused={focused}
              />
             ),
@@ -65,7 +65,7 @@ const TabsLayout = () => {
              <TabIcon
              icon={icons.alert}
               color={color}
-              name="Notificaciones"
+              //name="Notificaciones"
               focused={focused}
              />
             ),
@@ -80,7 +80,7 @@ const TabsLayout = () => {
               <TabIcon
               icon={icons.home}
                color={color}
-               name="Inicio"
+               //name="Inicio"
                focused={focused}
               />
             ),
@@ -96,7 +96,7 @@ const TabsLayout = () => {
               <TabIcon
              icon={icons.config}
               color={color}
-              name="Configuración"
+              //name="Configuración"
               focused={focused}
              />
             ),
