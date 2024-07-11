@@ -10,6 +10,7 @@ import { router } from "expo-router";
 import Header from "../src/components/header";
 import CustomButton from "../src/components/CustomButton";
 import CustomButtonWhite from "../src/components/CustomButtonWhite";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const App = () => {
   return (

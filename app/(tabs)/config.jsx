@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
       marginTop: 30
     },
     btnContainer: {
-      marginTop: 100,
+      marginTop: 10,
     },
     btnConfig: {
       borderRadius: 8,
@@ -55,12 +55,12 @@ const styles = StyleSheet.create({
       color: "#317b9b",
     },
     img: {
-      width: "45%",
-      height: "25%",
+      width: "48%",
+      height: "35%",
       marginTop: 25,
       display: 'flex',
       alignSelf: 'center',
-      borderRadius: 100,
+      borderRadius: 120,
   }
 })
 
