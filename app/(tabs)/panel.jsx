@@ -11,8 +11,7 @@ const Panel = () => {
     <>
       <SafeAreaView
 
-        className={`flex-1 bg-back
-      `}
+      className="h-full"
       >
         <StatusBar
           barStyle="light-content"
@@ -22,6 +21,11 @@ const Panel = () => {
           <Header
           title={"Paneles"}
           />
+          <TouchableOpacity>
+            <Text className="text-white text-center text-lg font-semibold bg-[#317B9B] p-2">
+              Agregar panel
+            </Text>
+          </TouchableOpacity>
           <FlatList
           className=""
             data={images}
@@ -38,7 +42,7 @@ const Panel = () => {
             }}
             ListHeaderComponent={() => {
               return (
-                <View className="flex items-center justify-center my-5 sticky">
+                <View className="flex items-center justify-center  sticky p-2">
                   <Text className="text-header text-center justify-center items-center text-xl">
                     Aqui podras encontrar todos los paneles que tienes disponibles
                   </Text>

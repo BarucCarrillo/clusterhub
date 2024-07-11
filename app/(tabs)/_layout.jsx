@@ -1,10 +1,10 @@
-import { View, Text , Image} from "react-native";
+import { View, Text , Image, Platform} from "react-native";
 import { Tabs } from "expo-router";
 import React from "react";
 import {icons} from "../../constants";
 
 const TabIcon = ({icon,color,name,focused}) => {
-  return <View className="items-center justify-center gap-2 mt-3">
+  return <View className="items-center justify-center gap-2 ">
 <Image
 source={icon}
 resizeMode="contain"
@@ -32,10 +32,9 @@ const TabsLayout = () => {
           tabBarActiveTintColor: "#317B9B",
           tabBarStyle: {
             backgroundColor: "#95D7CA",
-            borderTopWidth: 1,
-            borderTopColor: "#95D7CA",
-            height: 85,
-            marginTop: 15,
+            paddingTop: Platform.OS === "ios" ? 20 : 0,
+            height: 
+            Platform.OS === "ios" ? 100 : 84,
           },
         }}
       >
