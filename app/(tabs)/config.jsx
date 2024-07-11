@@ -1,8 +1,7 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native'
 import { Button } from 'react-native-elements/dist/buttons/Button'
 import React from 'react'
 import { router } from 'expo-router'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 const Config = () => {
   return (
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
       fontFamily: "Roboto",
       color: "#317b9b",
       textAlign: 'center',
-      marginTop: 30
+      marginTop: 35
     },
     btnContainer: {
       marginTop: 10,
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
     img: {
       width: "48%",
       height: "35%",
-      marginTop: 25,
+      marginTop: 35,
       display: 'flex',
       alignSelf: 'center',
       borderRadius: 120,

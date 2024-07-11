@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, View, Image, Modal, Button, Alert } from "react-native";
+import { StyleSheet, Text, TextInput, View, Image, Modal, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../../src/components/CustomButton";
 import { Icon } from "react-native-elements";
@@ -16,9 +16,16 @@ const infoConfig = () => {
             alert("You've refused to allow this app to access your photos!");
             return;
         }
-        const result = await ImagePicker.launchImageLibraryAsync();
-        if (!result.cancelled) {
-            setPickedImagePath(result.uri);
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            console.log(result);
+            setPickedImagePath(result.assets[0].uri); // Ajuste para la nueva API de ImagePicker
             setModalVisible(false);
         }
     };
@@ -29,25 +36,35 @@ const infoConfig = () => {
             alert("You've refused to allow this app to access your camera!");
             return;
         }
-        const result = await ImagePicker.launchCameraAsync();
-        if (!result.cancelled) {
-            setPickedImagePath(result.uri);
+        const result = await ImagePicker.launchCameraAsync({
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            console.log(result);
+            setPickedImagePath(result.assets[0].uri); // Ajuste para la nueva API de ImagePicker
             setModalVisible(false);
         }
     };
 
     return (
-        <SafeAreaView>
-            <View>
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={{ flex: 1, }}>
                 <Text style={styles.labelTitle}>Información Personal</Text>
-                <Image style={styles.img} source={{ uri: pickedImagePath }}></Image>
-                <View style={styles.iconContainer}>
+                <View style={styles.imageContainer}>
+                    {pickedImagePath !== '' && (
+                        <Image source={{ uri: pickedImagePath }} style={styles.image} />
+                    )}
                     <Icon
                         raised
                         name='camera-retro'
                         type='font-awesome'
                         color='#317B9B'
-                        onPress={() => setModalVisible(true)} />
+                        marginTop= '5'
+                        onPress={() => setModalVisible(true)}
+                    />
                 </View>
                 <View style={styles.infoContainer}>
                     <Text style={styles.label}>Nombre</Text>
@@ -63,8 +80,8 @@ const infoConfig = () => {
                         containerStyles={"bg-[#317B9B]"}
                         borderColor={"secondary"}
                         textStyles={"text-lg font-semibold text-center mt-2 text-white"}
-                        handlePress={() => router.push("/home")}>
-                    </CustomButton>
+                        handlePress={() => router.push("/config")}
+                    />
                 </View>
             </View>
 
@@ -77,11 +94,9 @@ const infoConfig = () => {
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>Selecciona una opción</Text>
-                        <Button onPress={showImagePicker} 
-                                title="Seleccionar una imagen"
-                                buttonStyle={styles.btnModal} />
-                        <Button onPress={openCamera} title="Abrir cámara" />
-                        <Button onPress={() => setModalVisible(false)} title="Cancelar" />
+                        <CustomButton handlePress={showImagePicker} title="Seleccionar una imagen" />
+                        <CustomButton handlePress={openCamera} title="Abrir cámara" />
+                        <CustomButton handlePress={() => setModalVisible(false)} title="Cancelar" />
                     </View>
                 </View>
             </Modal>
@@ -95,12 +110,12 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
         borderWidth: 3,
         borderRadius: 10,
-        paddingHorizontal: 10,
         marginBottom: 10,
-        width: "90%",
-        display: 'flex',
+        width: "80%",
         alignSelf: 'center',
-        width: "80%"
+    },
+    infoContainer: {
+        marginTop: 5,
     },
     labelTitle: {
         fontSize: 32,
@@ -121,22 +136,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     btnContainer: {
-        marginTop: 25,
-    },
-    infoContainer: {
         marginTop: 10,
-    },
-    img: {
-        width: "48%",
-        height: "25%",
-        marginTop: 25,
-        display: 'flex',
-        alignSelf: 'center',
-        borderRadius: 120,
-    },
-    iconContainer: {
-        display: 'flex',
-        alignSelf: 'center',
     },
     modalContainer: {
         flex: 1,
@@ -154,6 +154,18 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontSize: 20,
         marginBottom: 25,
+    },
+    imageContainer: {
+        alignItems: 'center',
+        marginTop: 15,
+    },
+    image: {
+        width: 200,
+        height: 200,
+        resizeMode: 'cover',
+        display: 'flex',
+        alignSelf: 'center',
+        borderRadius: 120,
     },
 });
 
