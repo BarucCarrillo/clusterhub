@@ -1,4 +1,11 @@
-import { View, Text, FlatList, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Image,
+  Platform,
+} from "react-native";
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import HomeCardDash from "../../src/components/HomeCardDash";
@@ -9,15 +16,13 @@ import Header from "../../src/components/header";
 const Home = () => {
   return (
     <>
-      <SafeAreaView
-        className={`flex-1
-      `}
-      >
-        <StatusBar barStyle="light-content" hidden={false} />
-        <View className="bg-back">
+      <SafeAreaView className="h-full">
+        <View
+          className="bg-back"
+        >
           <Header title={"Inicio"} />
           <FlatList
-            className=""
+            className=" "
             data={images.slice(0, 6)} // Render only the first 6 items
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
@@ -34,11 +39,10 @@ const Home = () => {
             }}
             ListHeaderComponent={() => {
               return (
-                <View className="flex items-center justify-center my-5 sticky p-2">
+                <View className="flex items-center justify-center sticky p-4">
                   <Text className="text-header text-center justify-center items-center text-xl">
                     Estos son los paneles que tienes marcados como favoritos ✨
                   </Text>
-                 
                 </View>
               );
             }}
