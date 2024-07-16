@@ -1,9 +1,11 @@
 import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native'
 import { Button } from 'react-native-elements/dist/buttons/Button'
 import React from 'react'
+import { useGlobalContext } from '../../context/GlobalProvider'
 import { router } from 'expo-router'
 
 const Config = () => {
+  const {logout} = useGlobalContext()
   return (
    <SafeAreaView>
 
@@ -23,7 +25,8 @@ const Config = () => {
         <Button title="Cerrar Sesión"
                 buttonStyle={styles.btnConfig}
                 titleStyle={{color:"#317b9b", fontSize: 28}}
-                onPress={()=> router.push('/')}/>
+                onPress={logout}
+                />
       </View>
     </View>
  </SafeAreaView>
