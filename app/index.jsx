@@ -36,7 +36,7 @@ const App = () => {
 
   useEffect(() => {
     if (isLogged && isMounted) {
-      router.push("/home");
+      router.replace("/home");
     }
   }, [isLogged, isMounted]);
 

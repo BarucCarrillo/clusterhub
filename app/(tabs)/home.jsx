@@ -12,8 +12,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "react-native-elements";
 import Header from "../../src/components/header";
 import CarouselCard from "../../src/components/carouselCard";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const Home = () => {
+  const { user } = useGlobalContext();
   return (
     <>
       <SafeAreaView className="h-full">
@@ -22,6 +24,7 @@ const Home = () => {
             <Image style={styles.img} source={{uri:'https://img.freepik.com/free-vector/global-warming-concept-illustration_114360-8510.jpg?t=st=1720730993~exp=1720734593~hmac=c75bdc5ff329378c9b8fb51de50dc483bf20e95508a9ce487d3e2c19c5cca884&w=996',}}></Image>
             <Text style={styles.textTittle}>NIVEL DE POLVO Y CONTAMINACIÓN</Text>
             <Text style={styles.textFav}>Favorito 
+             
             <Icon
               name='heart'
               type='font-awesome'

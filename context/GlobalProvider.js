@@ -11,6 +11,11 @@ const GlobalProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+
+  useEffect(() => {
+    console.log('User state updated:', user);
+  }, [user]); // Este efecto se ejecutará cada vez que `user` cambie
+
   const loginRequest = async (data) => {
     try {
       const response = await login(data); // Obtén la respuesta de la función login
@@ -27,7 +32,7 @@ const GlobalProvider = ({ children }) => {
           apellidos: response.apellidos,
           correo: response.correo,
         });
-        console.log(response);
+        console.log(user + "user");
       } else {
         Alert.alert("Login failed", response.error || "Unknown error");
       }
@@ -50,6 +55,9 @@ const GlobalProvider = ({ children }) => {
       Alert.alert("Logout error", error.message || "Unknown error");
     }
   }
+
+
+  
 
   useEffect(() => {
     const checkLogin = async () => {

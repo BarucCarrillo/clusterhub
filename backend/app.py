@@ -253,6 +253,21 @@ def dashboard_id():
             connection.commit()
             return jsonify({"status": "success"})
   
+  
+  
+@app.route('/dashboard_user/<int:id>', methods=['GET','POST'])
+def dashboard_user(id):
+    if request.method == 'GET':
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM dashboards WHERE user_id=%s", (id))
+            dashboards = cursor.fetchall()
+            return jsonify(dashboards)
+    elif request.method == 'POST':
+        data = request.get_json()
+        with connection.cursor() as cursor:
+            cursor.execute("INSERT INTO dashboards (nombre_dashboard, destacado, user_id) VALUES (%s, %s, %s)", (data['nombre'], data['destacado'], id))
+            connection.commit()
+            return jsonify({"status": "success"})
         
 @app.route('/invite_user', methods=['POST'])
 def invite_user():
