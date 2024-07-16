@@ -5,11 +5,13 @@ import {
   StyleSheet,
   Image,
   Platform,
+  ScrollView,
 } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Card, Icon } from "react-native-elements";
+import { Icon } from "react-native-elements";
 import Header from "../../src/components/header";
+import CarouselCard from "../../src/components/carouselCard";
 
 const Home = () => {
   return (
@@ -27,6 +29,11 @@ const Home = () => {
               onPress={() => console.log('hello')} /></Text>
             <Text style={styles.textInfo}>INFORMACIÓN ADICIONAL</Text>
             <Text style={styles.textRecom}>RECOMENDACIONES</Text>
+            <View>
+              <ScrollView horizontal >
+                <CarouselCard/>
+              </ScrollView>
+            </View>
         </View>
       </SafeAreaView>
     </>
@@ -78,7 +85,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignSelf: 'center',
     borderRadius: 140,
-  }
+  },
 })
 
 export default Home;
