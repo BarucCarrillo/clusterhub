@@ -1,72 +1,107 @@
 import * as React from "react";
+import { useState } from "react";
 import {
   StyleSheet,
   View,
   Text,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { router } from "expo-router";
 import Header from "../src/components/header";
 import CustomButton from "../src/components/CustomButton";
 import CustomButtonWhite from "../src/components/CustomButtonWhite";
 import { SafeAreaView } from "react-native-safe-area-context";
-
+import { useGlobalContext} from "../context/GlobalProvider";
 const App = () => {
+
+  const {loginRequest,isLogged , isLoading ,setIsLogged} = useGlobalContext();
+
+  const [form, setForm] = useState({
+    correo: "",
+    contrasena: "",
+  });
+
+  const submit = async () => {
+    if (form.correo === "" || form.contrasena === "") {
+      Alert.alert("Por favor llene todos los campos");
+      return;
+    }
+    try {
+      const response = await loginRequest(form);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  React.useEffect(() => {
+    if (isLogged) {
+      router.push("/home");
+    }
+  }
+  , [isLogged]);
+
+    
   return (
     <>
-    
-    
-    <View style={styles.rectangleView}>
-      <Text className="text-secondary text-3xl mt-10 text-center font-semibold">Ingreso</Text>
+      <View style={styles.rectangleView}>
+        <Text className="text-secondary text-3xl mt-10 text-center font-semibold">
+          Ingreso
+        </Text>
 
-      <View className="" style={styles.formContainer}>
-        <Text style={styles.label}>Correo</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ingrese su correo"
-          keyboardType="email-address"
-        />
-
-        <View style={styles.passwordContainer}>
-          <Text style={styles.label}>Contraseña</Text>
+        <View className="" style={styles.formContainer}>
+          <Text style={styles.label}>Correo</Text>
           <TextInput
+            value={form.correo}
+            onChangeText={(e) => setForm({ ...form, correo: e })}
             style={styles.input}
-            placeholder="Ingrese su contraseña"
-            secureTextEntry={true}
+            placeholder="Ingrese su correo"
+            keyboardType="email-address"
+          />
+
+          <View style={styles.passwordContainer}>
+            <Text style={styles.label}>Contraseña</Text>
+            <TextInput
+              style={styles.input}
+              value={form.contrasena}
+              onChangeText={(e) => setForm({ ...form, contrasena: e })}
+              placeholder="Ingrese su contraseña"
+              secureTextEntry={true}
+            />
+          </View>
+
+          <CustomButton
+            title={"Iniciar"}
+            containerStyles={"bg-[#317B9B]"}
+            borderColor={"secondary"}
+            textStyles={"text-lg font-semibold text-center mt-2 text-white"}
+            handlePress={submit}
+          ></CustomButton>
+
+          <TouchableOpacity onPress={() => router.push("/forgotpass")}>
+            <Text className="" style={styles.forgotPassword}>
+              Olvide mi contraseña
+            </Text>
+          </TouchableOpacity>
+
+          <View style={styles.dividerContainer}>
+            <View style={styles.divider} />
+            <Text style={styles.orText}>ó</Text>
+            <View style={styles.divider} />
+          </View>
+
+          <CustomButtonWhite
+            title={"Registrarme"}
+            background={"secondary"}
+            borderColor={"secondary"}
+            textColor={"secondary"}
+            textStyles={"text-lg font-semibold text-center mt-2 text-[#317B9B]"}
+            handlePress={() => router.push("/register")}
           />
         </View>
-
-        <CustomButton
-          title={"Iniciar"}
-          containerStyles={"bg-[#317B9B]"}
-          borderColor={"secondary"}
-          textStyles={"text-lg font-semibold text-center mt-2 text-white"}
-          handlePress={() => router.push("/home")}
-        ></CustomButton>
-
-        <TouchableOpacity onPress={() => router.push("/forgotpass")}>
-          <Text className="" style={styles.forgotPassword}>
-            Olvide mi contraseña
-          </Text>
-        </TouchableOpacity>
-
-        <View style={styles.dividerContainer}>
-          <View style={styles.divider} />
-          <Text style={styles.orText}>ó</Text>
-          <View style={styles.divider} />
-        </View>
-
-        <CustomButtonWhite
-          title={"Registrarme"}
-          background={"secondary"}
-          borderColor={"secondary"}
-          textColor={"secondary"}
-          textStyles={"text-lg font-semibold text-center mt-2 text-[#317B9B]"}
-          handlePress={() => router.push("/register")}
-        />
       </View>
-    </View>
     </>
   );
 };
