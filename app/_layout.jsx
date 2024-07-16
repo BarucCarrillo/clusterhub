@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Stack } from "expo-router";
 import GlobalProvider from "../context/GlobalProvider"; // Ajusta la ruta según sea necesario
 import { useGlobalContext } from "../context/GlobalProvider"; // Ajusta la ruta según sea necesario
 import LoadingScreen from "../src/components/LoadingScreen"; // Ajusta la ruta según sea necesario
 
 const RootLayout = () => {
-  const { isLogged, loading,cargando } = useGlobalContext();
+  const { isLogged, loading } = useGlobalContext();
+  const [isMounted, setIsMounted] = useState  (false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+ 
 
   if (loading) {
     return <LoadingScreen />;
   }
+
+
 
   return (
     <Stack>

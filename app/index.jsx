@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import {
   StyleSheet,
@@ -13,15 +14,31 @@ import Header from "../src/components/header";
 import CustomButton from "../src/components/CustomButton";
 import CustomButtonWhite from "../src/components/CustomButtonWhite";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useGlobalContext} from "../context/GlobalProvider";
+import { useGlobalContext } from "../context/GlobalProvider";
 const App = () => {
-
-  const {loginRequest,isLogged , isLoading ,setIsLogged} = useGlobalContext();
+  const { loginRequest, isLogged, isLoading, setIsLogged } = useGlobalContext();
 
   const [form, setForm] = useState({
     correo: "",
     contrasena: "",
   });
+
+
+  const  [isMounted, setIsMounted] = useState(false);
+
+
+  useEffect(() => {
+    setIsMounted(true);
+    return () => {
+      setIsMounted(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isLogged && isMounted) {
+      router.push("/home");
+    }
+  }, [isLogged, isMounted]);
 
   const submit = async () => {
     if (form.correo === "" || form.contrasena === "") {
@@ -34,16 +51,10 @@ const App = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  React.useEffect(() => {
-    if (isLogged) {
-      router.push("/home");
-    }
-  }
-  , [isLogged]);
 
-    
+
   return (
     <>
       <View style={styles.rectangleView}>
