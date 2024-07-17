@@ -9,7 +9,7 @@ const TabIcon = ({icon,color,name,focused}) => {
 source={icon}
 resizeMode="contain"
 tintColor={color}
-className="w-12 h-12"
+className="w-10 h-10"
 />
 
 <Text className={`${focused ? "font-semibold" : "font-normal"}text-xs`}
@@ -32,9 +32,9 @@ const TabsLayout = () => {
           tabBarActiveTintColor: "#317B9B",
           tabBarStyle: {
             backgroundColor: "#95D7CA",
-            paddingTop: Platform.OS === "ios" ? 20 : 20,
+            paddingTop: Platform.OS === "ios" ? 25 : 25,
             height: 
-            Platform.OS === "ios" ? 100 : 80,
+            Platform.OS === "ios" ? 80 : 60,
           },
         }}
       >
