@@ -45,12 +45,6 @@ const Panel = () => {
         <StatusBar barStyle="light-content" hidden={false} />
         <View className="bg-back">
           <Header title={"Paneles"} />
-          <TouchableOpacity>
-
-            <Text className="text-white text-center text-lg font-semibold  p-2">
-              Agregar panel
-            </Text>
-          </TouchableOpacity>
           <FlatList
             className=""
             data={data}
@@ -68,10 +62,7 @@ const Panel = () => {
             ListHeaderComponent={() => {
               return (
                 <View className="flex items-center justify-center  sticky p-2">
-                  <Text className="text-header text-center justify-center items-center text-xl">
-                    Aqui podras encontrar todos los paneles que tienes
-                    disponibles
-                  </Text>
+                  
                 </View>
               );
             }}
@@ -86,13 +77,14 @@ const Panel = () => {
                     }
                     handlePress={() => router.push("/addpanel")}
                   />
-                  <Text
-                    className={`text-secondary text-center text-2xl my-10 ${
-                      true ? "h-screen" : ""
-                    }`}
-                  >
-                    No hay paneles disponibles
-                  </Text>
+                  <CustomButton
+                    title="Administrar panel"
+                    containerStyles={"bg-[#317B9B]"}
+                    textStyles={
+                      "text-lg font-semibold text-center mt-2 text-white"
+                    }
+                    //handlePress={() => router.push("/addpanel")}
+                  />
                 </>
               );
             }}

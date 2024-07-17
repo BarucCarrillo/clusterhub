@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, View, Image, Modal, Alert } from "react-native";
+import { StyleSheet, Text, TextInput, View, Image, Modal, Alert, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../../src/components/CustomButton";
 import { Icon } from "react-native-elements";
@@ -51,6 +51,7 @@ const infoConfig = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
+            <ScrollView>
             <View style={{ flex: 1, }}>
                 <Text style={styles.labelTitle}>Información Personal</Text>
                 <View style={styles.imageContainer}>
@@ -84,6 +85,7 @@ const infoConfig = () => {
                     />
                 </View>
             </View>
+            </ScrollView>
 
             <Modal
                 animationType="slide"
@@ -106,7 +108,7 @@ const infoConfig = () => {
 
 const styles = StyleSheet.create({
     input: {
-        height: 50,
+        height: 40,
         borderColor: '#ccc',
         borderWidth: 3,
         borderRadius: 10,
@@ -126,7 +128,7 @@ const styles = StyleSheet.create({
         marginTop: 30
     },
     label: {
-        fontSize: 28,
+        fontSize: 25,
         fontFamily: "Roboto",
         color: "#317b9b",
         textAlign: "left",
@@ -160,8 +162,8 @@ const styles = StyleSheet.create({
         marginTop: 15,
     },
     image: {
-        width: 200,
-        height: 200,
+        width: 150,
+        height: 150,
         resizeMode: 'cover',
         display: 'flex',
         alignSelf: 'center',
