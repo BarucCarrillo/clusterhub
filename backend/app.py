@@ -3,16 +3,12 @@ import pymysql.cursors
 import jwt
 import bcrypt
 import datetime
-
-
-
-
-
-
+from dotenv import load_dotenv
+import os
 
 # encoded_jwt = jwt.encode({"token": "token"},"SECRET_KEY", algorithm="HS256");
 
-
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -301,4 +297,7 @@ def dashboard_graficas():
             connection.commit()
             return jsonify({"status": "success"})
     
-      
+
+if __name__ == '__main__':
+    host = os.getenv('HOST')
+    app.run(host=host,port=5000)

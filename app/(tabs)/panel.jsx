@@ -15,6 +15,7 @@ import CustomButton from "../../src/components/CustomButton";
 import Header from "../../src/components/header";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { getDashboardUser } from "../../lib";
+import { router } from "expo-router";
 
 const Panel = () => {
   const [data, setData] = useState([]);
@@ -75,7 +76,7 @@ const Panel = () => {
                     textStyles={
                       "text-lg font-semibold text-center mt-2 text-white"
                     }
-                    handlePress={() => router.push("/addpanel")}
+                    handlePress={() => router.push("/newPanel")}
                   />
                   <CustomButton
                     title="Administrar panel"
@@ -83,7 +84,7 @@ const Panel = () => {
                     textStyles={
                       "text-lg font-semibold text-center mt-2 text-white"
                     }
-                    //handlePress={() => router.push("/addpanel")}
+                    handlePress={() => router.push("/addpanel")}
                   />
                 </>
               );
