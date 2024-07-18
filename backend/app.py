@@ -222,8 +222,8 @@ def dashboard():
             
             
             
-@app.route('/dashboard/<int:id>', methods=['GET','PUT','DELETE'])
-def dashboard_id():
+@app.route('/dashboard/<int:id>', methods=['GET','PUT','DELETE','POST'])
+def dashboard_id(id):
     if request.method == 'GET':
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM dashboard WHERE id_dashboard=%s", (id))
@@ -238,7 +238,7 @@ def dashboard_id():
             dashboard = cursor.fetchone()
             if not dashboard:
                 return jsonify({"error": "Dashboard not found"})
-            cursor.execute("UPDATE dashboard SET nombre_dashboard=%s, destacado=%s WHERE id_dashboard=%s", (data['nombre'], data['destacado'], id))
+            cursor.execute("UPDATE dashboard SET nombre_dashboard=%s,descripcion=%s, destacado=%s WHERE id_dashboard=%s", (data['nombre'],data['descripcion'], data['destacado'], id))
             connection.commit()
             return jsonify({"status": "success"})
     elif request.method == 'DELETE':
@@ -250,8 +250,18 @@ def dashboard_id():
             cursor.execute("DELETE FROM dashboard WHERE id_dashboard=%s", (id))
             connection.commit()
             return jsonify({"status": "success"})
-  
-  
+    elif request.method == 'POST':
+            data = request.get_json()
+            # Asegúrate de que 'destacado' sea un valor booleano
+            data['destacado'] = True if data.get('destacado', False) else False
+
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "INSERT INTO dashboards (nombre_dashboard, descripcion, destacado, user_id) VALUES (%s, %s, %s, %s)",
+                    (data['nombre'], data['descripcion'], data['destacado'], id)
+                )
+                connection.commit()
+            return jsonify({"status": "success"})
   
 @app.route('/dashboard_user/<int:id>', methods=['GET','POST'])
 def dashboard_user(id):
@@ -296,6 +306,27 @@ def dashboard_graficas():
         data = request.get_json()
         with connection.cursor() as cursor:
             cursor.execute("INSERT INTO dashboard_graficas (dashboard_id, graficas_id) VALUES (%s, %s)", (data['id'],data['grafica_id']))
+            connection.commit()
+            return jsonify({"status": "success"})
+        
+        
+@app.route('/graficas', methods=['GET','POST','DELETE'])
+def graficas():
+    if request.method == 'GET':
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM graficas")
+            graficas = cursor.fetchall()
+            return jsonify(graficas)
+    elif request.method == 'POST':
+        data = request.get_json()
+        with connection.cursor() as cursor:
+            cursor.execute("INSERT INTO graficas (nombre_grafica) VALUES (%s)", (data['nombre']))
+            connection.commit()
+            return jsonify({"status": "success"})
+    elif request.method == 'DELETE':
+        data = request.get_json()
+        with connection.cursor() as cursor:
+            cursor.execute("DELETE FROM graficas WHERE id_grafica=%s", (data['id']))
             connection.commit()
             return jsonify({"status": "success"})
     

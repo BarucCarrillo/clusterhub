@@ -15,29 +15,25 @@ import CustomButton from "../../src/components/CustomButton";
 import Header from "../../src/components/header";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { getDashboardUser } from "../../lib";
-
+import { router } from "expo-router";
 const Panel = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const { user } = useGlobalContext();
 
-// let id = user.id;
-
+  let id = user.id;
+ 
   const fetchDashboard = async () => {
     try {
       const response = await getDashboardUser(id);
-      console.log(response);
-      setData(response.data);
-
+      console.log(response + " response");
+      setData(response);
     } catch (error) {
       console.log(error);
     }
   };
-
   useEffect(() => {
     fetchDashboard();
-    console.log(user);
-    console.log(data);
-  }, [user]);
+  }, []);
 
   return (
     <>
@@ -45,12 +41,24 @@ const Panel = () => {
         <StatusBar barStyle="light-content" hidden={false} />
         <View className="bg-back">
           <Header title={"Paneles"} />
-          <TouchableOpacity>
-
-            <Text className="text-white text-center text-lg font-semibold  p-2">
-              Agregar panel
-            </Text>
-          </TouchableOpacity>
+          <>
+                  <CustomButton
+                    title="Agregar panel"
+                    containerStyles={"bg-[#317B9B]"}
+                    textStyles={
+                      "text-lg font-semibold text-center mt-2 text-white"
+                    }
+                    handlePress={() => router.push("/newPanel")}
+                  />
+                  <CustomButton
+                    title="Administrar panel"
+                    containerStyles={"bg-[#317B9B]"}
+                    textStyles={
+                      "text-lg font-semibold text-center mt-2 text-white"
+                    }
+                    handlePress={() => router.push("/addpanel")}
+                  />
+                </>
           <FlatList
             className=""
             data={data}
@@ -60,40 +68,29 @@ const Panel = () => {
                 <HomeCardDash
                   id={item.id_dashboard}
                   title={item.nombre_dashboard}
-                  description={item.user_id}
+                  description={item.descripcion}
                   image={item.image}
                 />
               );
             }}
             ListHeaderComponent={() => {
               return (
-                <View className="flex items-center justify-center  sticky p-2">
-                  <Text className="text-header text-center justify-center items-center text-xl">
-                    Aqui podras encontrar todos los paneles que tienes
-                    disponibles
-                  </Text>
-                </View>
+                <View className="flex items-center justify-center  sticky p-2"></View>
               );
             }}
             ListEmptyComponent={() => {
               return (
-                <>
-                  <CustomButton
-                    title="Agregar panel"
-                    containerStyles={"bg-[#317B9B]"}
-                    textStyles={
-                      "text-lg font-semibold text-center mt-2 text-white"
-                    }
-                    handlePress={() => router.push("/addpanel")}
-                  />
-                  <Text
-                    className={`text-secondary text-center text-2xl my-10 ${
-                      true ? "h-screen" : ""
-                    }`}
-                  >
-                    No hay paneles disponibles
-                  </Text>
-                </>
+              <>
+              <Text>
+                No tienes paneles creados
+              </Text>
+              <CustomButton
+                containerStyles={"bg-[#317B9B]"}
+                textStyles={"text-lg font-semibold text-left mt-2 text-white"}
+                title={"Crear Panel"}
+                handlePress={() => router.push("/newPanel")}
+              />
+              </>
               );
             }}
           />

@@ -37,14 +37,38 @@ const Home = () => {
               <ScrollView horizontal 
                           style={styles.scrollCards}
                           showsHorizontalScrollIndicator={false}>
-                <Card>
-                  <Text style={styles.txtCard}> UTILIZA PROTECTOR SOLAR</Text>
+                <Card containerStyle={styles.card}>
+                  <View style={styles.container}>
+                    <Image
+                      source={{ uri: 'https://via.placeholder.com/150' }} // Replace with your image URL or local image source
+                      style={styles.image}
+                    />
+                    <View style={styles.textContainer}>
+                      <Text style={styles.text}>RECOMENDAMOS EL USO DE BLOQUEADOR</Text>
+                    </View>
+                  </View>
                 </Card>
-                <Card>
-                  <Text style={styles.txtCard}>HAZ USO DE CUBREBOCAS </Text>
+                <Card containerStyle={styles.card}>
+                  <View style={styles.container}>
+                    <Image
+                      source={{ uri: 'https://via.placeholder.com/150' }} // Replace with your image URL or local image source
+                      style={styles.image}
+                    />
+                    <View style={styles.textContainer}>
+                      <Text style={styles.text}>USA MASCARILLA PARA PROTECCIÓN</Text>
+                    </View>
+                  </View>
                 </Card>
-                <Card>
-                  <Text style={styles.txtCard}>UTILIZA ROPA FRESCA</Text>
+                <Card containerStyle={styles.card}>
+                  <View style={styles.container}>
+                    <Image
+                      source={{ uri: 'https://via.placeholder.com/150' }} // Replace with your image URL or local image source
+                      style={styles.image}
+                    />
+                    <View style={styles.textContainer}>
+                      <Text style={styles.text}>LAVA TUS MANOS FRECUENTEMENTE</Text>
+                    </View>
+                  </View>
                 </Card>
               </ScrollView>
             </View>
@@ -100,21 +124,38 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 140,
   },
-  txtCard: {
-    fontFamily: 'Roboto',
-    fontWeight: 'bold',
-    fontSize: 20,
-    marginTop: 30,
-    color: "#317B9B",
-    position: 'relative',
-  },
   cardContainer: {
-    height: 150,
+    marginTop: 1,
   },
   scrollCards: {
-    marginLeft: 15,
-    marginRight: 15,
+    paddingLeft: 5,
   },
-})
+  card: {
+    borderRadius: 10,
+    overflow: 'hidden',
+    width: "30%", // Adjust width as needed
+    marginRight: 10,
+  },
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  image: {
+    width: '40%',
+    height: 100,
+  },
+  textContainer: {
+    width: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 16,
+    textAlign: 'center',
+    fontFamily: 'Roboto',
+    color: "#317B9B",
+    fontWeight: '900'
+  },
+});
 
 export default Home;

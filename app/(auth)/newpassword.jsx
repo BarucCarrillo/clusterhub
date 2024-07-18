@@ -47,7 +47,7 @@ const newPassword = () => {
       <TextInput
         secureTextEntry={true}
         value={form.password}
-        onChangeText={(text) => setForm({ ...form, password: text })}
+        onChangeText={(e) => setForm({ ...form, password: e })}
         style={styles.input}
       />
 
@@ -57,9 +57,9 @@ const newPassword = () => {
         <Text style={styles.label}>Nueva Contraseña</Text>
 
         <TextInput
-          value={form.newPassword}
+          value={form.new_password}
           secureTextEntry={true}
-          onChangeText={(text) => setForm({ ...form, newPassword: text })}
+          onChangeText={(e) => setForm({ ...form, new_password: e })}
           style={styles.input}
         />
 
@@ -67,8 +67,8 @@ const newPassword = () => {
 
         <TextInput
           secureTextEntry={true}
-          value={form.confirmPassword}
-          onChangeText={(text) => setForm({ ...form, confirmPassword: text })}
+          value={form.confirm_password}
+          onChangeText={(e) => setForm({ ...form, confirm_password: e })}
           style={styles.input}
         />
       </View>

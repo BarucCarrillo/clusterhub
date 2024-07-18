@@ -42,6 +42,12 @@ const RootLayout = () => {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="(panels)"
+            options={{
+              headerShown: false,
+            }}
+            />
         </>
       </Stack>
     </GlobalProvider>

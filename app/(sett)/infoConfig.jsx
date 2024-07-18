@@ -167,68 +167,68 @@ const infoConfig = () => {
 };
 
 const styles = StyleSheet.create({
-  input: {
-    height: 50,
-    borderColor: "#ccc",
-    borderWidth: 3,
-    borderRadius: 10,
-    marginBottom: 10,
-    width: "80%",
-    alignSelf: "center",
-  },
-  infoContainer: {
-    marginTop: 5,
-  },
-  labelTitle: {
-    fontSize: 32,
-    fontWeight: "700",
-    fontFamily: "Roboto",
-    color: "#317b9b",
-    textAlign: "center",
-    marginTop: 30,
-  },
-  label: {
-    fontSize: 28,
-    fontFamily: "Roboto",
-    color: "#317b9b",
-    textAlign: "left",
-    marginLeft: 50,
-    marginTop: 15,
-    marginRight: 60,
-    marginBottom: 20,
-  },
-  btnContainer: {
-    marginTop: 10,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
-  },
-  modalContent: {
-    width: 350,
-    backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  modalTitle: {
-    fontSize: 20,
-    marginBottom: 25,
-  },
-  imageContainer: {
-    alignItems: "center",
-    marginTop: 15,
-  },
-  image: {
-    width: 200,
-    height: 200,
-    resizeMode: "cover",
-    display: "flex",
-    alignSelf: "center",
-    borderRadius: 120,
-  },
+    input: {
+        height: 40,
+        borderColor: '#ccc',
+        borderWidth: 3,
+        borderRadius: 10,
+        marginBottom: 10,
+        width: "80%",
+        alignSelf: 'center',
+    },
+    infoContainer: {
+        marginTop: 5,
+    },
+    labelTitle: {
+        fontSize: 32,
+        fontWeight: "700",
+        fontFamily: "Roboto",
+        color: "#317b9b",
+        textAlign: 'center',
+        marginTop: 30
+    },
+    label: {
+        fontSize: 25,
+        fontFamily: "Roboto",
+        color: "#317b9b",
+        textAlign: "left",
+        marginLeft: 50,
+        marginTop: 15,
+        marginRight: 60,
+        marginBottom: 20,
+    },
+    btnContainer: {
+        marginTop: 10,
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    modalContent: {
+        width: 350,
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    modalTitle: {
+        fontSize: 20,
+        marginBottom: 25,
+    },
+    imageContainer: {
+        alignItems: 'center',
+        marginTop: 15,
+    },
+    image: {
+        width: 150,
+        height: 150,
+        resizeMode: 'cover',
+        display: 'flex',
+        alignSelf: 'center',
+        borderRadius: 120,
+    },
 });
 
 export default infoConfig;
