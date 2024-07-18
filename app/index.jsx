@@ -1,6 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -10,28 +9,27 @@ import {
   Alert,
 } from "react-native";
 import { router } from "expo-router";
-import Header from "../src/components/header";
-import CustomButton from "../src/components/CustomButton";
-import CustomButtonWhite from "../src/components/CustomButtonWhite";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGlobalContext } from "../context/GlobalProvider";
+import CustomButton from "../src/components/CustomButton";
+import CustomButtonWhite from "../src/components/CustomButtonWhite";
+import LoadingScreen from "../src/components/LoadingScreen";
+
 const App = () => {
-  const { loginRequest, isLogged, isLoading, setIsLogged } = useGlobalContext();
+  const { loginRequest, isLogged, loading, setIsLogged } = useGlobalContext();
 
   const [form, setForm] = useState({
     correo: "",
     contrasena: "",
   });
 
-
-  const  [isMounted, setIsMounted] = useState(false);
-
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
     return () => {
       setIsMounted(false);
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -49,20 +47,22 @@ const App = () => {
       const response = await loginRequest(form);
       console.log(response);
     } catch (error) {
+      console.log(response);
       console.log(error);
     }
   };
 
-
-
   return (
-    <>
+    <SafeAreaView style={styles.safeArea}>
+      <LoadingScreen
+      isLoading={loading}
+      />
       <View style={styles.rectangleView}>
-        <Text className="text-secondary text-3xl mt-10 text-center font-semibold">
+        <Text style={styles.headerText}>
           Ingreso
         </Text>
 
-        <View className="" style={styles.formContainer}>
+        <View style={styles.formContainer}>
           <Text style={styles.label}>Correo</Text>
           <TextInput
             value={form.correo}
@@ -89,10 +89,10 @@ const App = () => {
             borderColor={"secondary"}
             textStyles={"text-lg font-semibold text-center mt-2 text-white"}
             handlePress={submit}
-          ></CustomButton>
+          />
 
           <TouchableOpacity onPress={() => router.push("/forgotpass")}>
-            <Text className="" style={styles.forgotPassword}>
+            <Text style={styles.forgotPassword}>
               Olvide mi contraseña
             </Text>
           </TouchableOpacity>
@@ -113,19 +113,30 @@ const App = () => {
           />
         </View>
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   rectangleView: {
+    flex: 1,
     borderTopLeftRadius: 60,
     backgroundColor: "#f5f5f5",
-    flex: 1,
-    width: "100%",
+    paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+  headerText: {
+    color: '#317B9B',
+    fontSize: 30,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginVertical: 20,
   },
   formContainer: {
-    paddingHorizontal: 20,
     marginTop: 20,
   },
   input: {
@@ -135,35 +146,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 10,
     marginBottom: 20,
-    width: "90%",
-    display: "flex",
-    alignSelf: "center",
+    width: "100%",
   },
   label: {
-    fontSize: 28,
+    fontSize: 20,
     fontFamily: "Roboto",
     color: "#317b9b",
     textAlign: "left",
-    marginLeft: 25,
-    marginTop: 15,
-    marginRight: 60,
-    marginBottom: 20,
-    fontWeight: "semibold",
-  },
-  loginButton: {
-    backgroundColor: "#16557a",
-    borderRadius: 10,
-    height: 50,
-    width: "60%",
-    height: 50,
-    marginTop: 20,
-    marginLeft: 25,
+    marginBottom: 10,
   },
   forgotPassword: {
     color: "#16557a",
     marginTop: 20,
     textAlign: "left",
-    marginLeft: 25,
     fontSize: 15,
     fontWeight: "bold",
   },
@@ -181,15 +176,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     color: "#16557a",
     fontSize: 15,
-  },
-  registerButton: {
-    borderColor: "#16557a",
-    borderWidth: 2,
-    borderRadius: 10,
-    height: 50,
-    width: "80%",
-    display: "flex",
-    alignSelf: "center",
   },
 });
 

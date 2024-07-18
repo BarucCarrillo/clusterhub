@@ -131,22 +131,24 @@ def user(id):
             return jsonify({"status": "success"})
 
 
-@app.route('/usersscret/<int:id>/', methods=['POST'])
+@app.route('/userChangePassword/<int:id>/', methods=['PATCH'])
 def change_password(id):
     data = request.get_json()
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM users WHERE id_user=%s", (id))
-        user = cursor.fetchone()
-        if not user:
-            return jsonify({"error": "User not found"})
-        if bcrypt.checkpw(data['password'].encode('utf-8'), user['contrasena'].encode('utf-8')):
-            new_password = bcrypt.hashpw(data['new_password'].encode('utf-8'), bcrypt.gensalt())
-            cursor.execute("UPDATE users SET contrasena=%s WHERE id_user=%s", (new_password.decode('utf-8'), id))
-            connection.commit()
-            return jsonify({"status": "success"})
-        else:
-            return jsonify({"error": "Invalid password"})
-        
+                    cursor.execute("SELECT * FROM users WHERE id_user=%s", (id))
+                    user = cursor.fetchone()
+                    if not user:
+                        return jsonify({"error": "User not found"})
+                    if bcrypt.checkpw(data['password'].encode('utf-8'), user['contrasena'].encode('utf-8')):
+                        if data['new_password'] == data['confirm_password']:
+                            new_password = bcrypt.hashpw(data['new_password'].encode('utf-8'), bcrypt.gensalt())
+                            cursor.execute("UPDATE users SET contrasena=%s WHERE id_user=%s", (new_password.decode('utf-8'), id))
+                            connection.commit()
+                            return jsonify({"status": "success"})
+                        else:
+                            return jsonify({"error": "Passwords do not match"})
+                    else:
+                        return jsonify({"error": "Invalid password"})
         
 @app.route('/sensor', methods=['GET','POST'])
 def sensor():

@@ -1,9 +1,12 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { BACKEND_API } from '@env'; // Asegúrate de que esta línea esté presente en tu archivo
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import { login } from "../lib";
 import { router } from "expo-router";
 const GlobalContext = createContext();
+
 export const useGlobalContext = () => useContext(GlobalContext);
 
 const GlobalProvider = ({ children }) => {
@@ -12,9 +15,7 @@ const GlobalProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
 
-  useEffect(() => {
-    console.log('User state updated:', user);
-  }, [user]); // Este efecto se ejecutará cada vez que `user` cambie
+
 
   const loginRequest = async (data) => {
     try {
@@ -26,13 +27,17 @@ const GlobalProvider = ({ children }) => {
         await AsyncStorage.setItem("token", response.token);
         Alert.alert("Login successful", `Welcome ${response.nombre}`);
         setIsLogged(true);
-        setUser({
+        const userData=({
           id: response.id,
           nombre: response.nombre,
           apellidos: response.apellidos,
           correo: response.correo,
         });
-        console.log(user + "user");
+        await AsyncStorage.setItem("user", JSON.stringify(userData));
+        Alert.alert("Login successful", `Welcome ${response.nombre}`);
+        setIsLogged(true);
+        setUser(userData);
+        console.log('User after login:', userData);
       } else {
         Alert.alert("Login failed", response.error || "Unknown error");
       }
@@ -43,10 +48,91 @@ const GlobalProvider = ({ children }) => {
     }
   };
 
+  const updateInfoUser = async (data) => {
+    try {
+      const token = await AsyncStorage.getItem("token"); // Obtener el token almacenado
+      if (!token) {
+        throw new Error("No token found. Please login again.");
+      }
+  
+      const response = await fetch(`${BACKEND_API}/users/${data.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Update failed");
+      }
+  
+      const result = await response.json();
+  
+      // Asumir que la actualización fue exitosa si llegamos a este punto
+      // Actualizar la información del usuario en AsyncStorage con los datos que enviaste
+      const updatedUserData = {
+        id: data.id,
+        nombre: data.nombre,
+        apellidos: data.apellidos,
+        correo: data.correo,
+      };
+      await AsyncStorage.setItem("user", JSON.stringify(updatedUserData));
+  
+      Alert.alert("Update successful", "User information updated successfully");
 
+      setUser(updatedUserData);
+      console.log('User after update:', updatedUserData);
+      
+      return result;
+  
+    } catch (error) {
+      console.error("Error:", error);
+      Alert.alert("Update error", error.message || "Unknown error");
+      throw error;
+    }
+  };
+  
+
+
+  const userChangePassword = async (data) => {
+    try{
+      const token = await AsyncStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found. Please login again.");
+      }
+      const response = await fetch(`${BACKEND_API}/userChangePassword/${user.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Update failed");
+      }
+      const result = await response.json();
+      Alert.alert("Update successful", "User information updated successfully");
+      return result;
+    }catch (error) {
+      console.error("Error:", error);
+      Alert.alert("Update error", error.message || "Unknown error");
+      throw error;
+    }
+
+
+  }
+
+
+
+  
   const logout = async () => {
     try {
       await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem("user");
+
       setIsLogged(false);
       setUser(null);
       router.replace("/");
@@ -64,16 +150,18 @@ const GlobalProvider = ({ children }) => {
       try {
         const token = await AsyncStorage.getItem("token");
         if (token) {
+          const userData = await AsyncStorage.getItem("user");
+          if (userData) {
+            setUser(JSON.parse(userData));
+          }
           setIsLogged(true);
-          setLoading(false);
         } else {
           setIsLogged(false);
-          setLoading(false);
         }
       } catch (error) {
         console.error("Check login error", error);
         Alert.alert("Check login error", error.message || "Unknown error");
-      }finally{
+      } finally {
         setLoading(false);
       }
     };
@@ -81,9 +169,15 @@ const GlobalProvider = ({ children }) => {
     checkLogin();
   }, []);
 
+
+  useEffect(() => {
+    console.log('User state updated:', user);
+  }, [user]);
+
+
   return (
     <GlobalContext.Provider
-      value={{ isLogged, setIsLogged, user, setUser, loading, loginRequest ,logout}}
+      value={{ isLogged, setIsLogged, user, setUser, loading, loginRequest ,logout, updateInfoUser,userChangePassword}}
     >
       {children}
     </GlobalContext.Provider>

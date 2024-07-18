@@ -1,54 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { Stack } from "expo-router";
 import GlobalProvider from "../context/GlobalProvider"; // Ajusta la ruta según sea necesario
-import { useGlobalContext } from "../context/GlobalProvider"; // Ajusta la ruta según sea necesario
-import LoadingScreen from "../src/components/LoadingScreen"; // Ajusta la ruta según sea necesario
+import LoadingScreen from "../src/components/LoadingScreen";
+
 
 const RootLayout = () => {
-  const { isLogged, loading } = useGlobalContext();
-  const [isMounted, setIsMounted] = useState  (false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
- 
-
-  if (loading) {
-    return <LoadingScreen />;
-  }
 
 
 
   return (
-    <Stack
-    screenOptions={
-      {
-        headerShown: false,
-      }
-    }
-    >
-      <Stack.Screen
-        name="index"
-        options={{
+    <GlobalProvider>
+      <Stack
+        screenOptions={{
           headerShown: false,
         }}
-      />
-      {!isLogged ? (
+      >
+        <Stack.Screen
+          name="index"
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="(auth)"
           options={{
             headerShown: false,
           }}
         />
-      ) : (
+
         <>
           <Stack.Screen
             name="(tabs)"
             options={{
               headerShown: false,
             }}
-
+            r
           />
           <Stack.Screen
             name="(sett)"
@@ -57,17 +43,9 @@ const RootLayout = () => {
             }}
           />
         </>
-      )}
-    </Stack>
-  );
-};
-
-const AppLayout = ({ children }) => {
-  return (
-    <GlobalProvider>
-      <RootLayout />
+      </Stack>
     </GlobalProvider>
   );
 };
 
-export default AppLayout;
+export default RootLayout;

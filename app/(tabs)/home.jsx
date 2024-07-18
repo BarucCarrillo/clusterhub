@@ -7,7 +7,7 @@ import {
   Platform,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "react-native-elements";
 import Header from "../../src/components/header";
@@ -16,6 +16,7 @@ import { Card } from "react-native-elements";
 
 const Home = () => {
   const { user } = useGlobalContext();
+
   return (
     <>
       <SafeAreaView className="h-full">
