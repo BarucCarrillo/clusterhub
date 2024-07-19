@@ -16,13 +16,15 @@ const newPanel = () => {
   const [widgetVisible, setWidgetVisible] = useState(false);
   const [saveVisible, setSaveVisible] = useState(false);
   const [selectedWidgets, setSelectedWidgets] = useState(new Set()); // Almacena los IDs seleccionados
-
+  const {insertWidgetsInDashboard} = useGlobalContext();
   const [form, setForm] = useState({
     nombre: "",
     descripcion: "",
     destacado: 0,
     id: user.id,
   });
+
+
 
   const handleWidgetSelect = (id) => {
     setSelectedWidgets((prevSelected) => {
@@ -34,16 +36,31 @@ const newPanel = () => {
           newSelected.add(id);
         }
       }
+
       return newSelected;
     });
   };
 
+
+
+
   const submit = async () => {
     try {
       const response = await createDashboard(form);
-      setSaveVisible(true);
-      router.push("/panel");
-      console.log(response);
+      if (response.status === 'success'){
+        const dashboardId = response.id;
+        const widgets = Array.from(selectedWidgets);
+        console.log(widgets + " widgets submit");
+        await insertWidgetsInDashboard(dashboardId, widgets);
+        setSaveVisible(true);
+        router.push("/panel");
+        // console.log(response.id)
+
+        // console.log(response);
+      }else{
+        console.log("Error al crear el panel");
+      }
+   
     } catch (error) {
       console.log(error + " error");
     }
@@ -144,7 +161,7 @@ const newPanel = () => {
             <View style={styles.container}>
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => setSaveVisible(true)}
+                onPress={() => setWidgetVisible(false)}
               >
                 <Icon
                   name="check-circle"
@@ -152,7 +169,7 @@ const newPanel = () => {
                   color="#FFFFFF"
                   style={styles.icon}
                 />
-                <Text style={styles.buttonText}>Aceptar</Text>
+                <Text style={styles.buttonText}>Aceptrar</Text>
               </TouchableOpacity>
               <View style={{ width: 20 }}></View>
               <TouchableOpacity

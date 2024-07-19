@@ -25,7 +25,7 @@ const Panel = () => {
   const fetchDashboard = async () => {
     try {
       const response = await getDashboardUser(id);
-      console.log(response + " response");
+      // console.log(response + " response");
       setData(response);
     } catch (error) {
       console.log(error);
@@ -84,12 +84,7 @@ const Panel = () => {
               <Text>
                 No tienes paneles creados
               </Text>
-              <CustomButton
-                containerStyles={"bg-[#317B9B]"}
-                textStyles={"text-lg font-semibold text-left mt-2 text-white"}
-                title={"Crear Panel"}
-                handlePress={() => router.push("/newPanel")}
-              />
+              
               </>
               );
             }}

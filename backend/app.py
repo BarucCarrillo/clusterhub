@@ -261,7 +261,9 @@ def dashboard_id(id):
                     (data['nombre'], data['descripcion'], data['destacado'], id)
                 )
                 connection.commit()
-            return jsonify({"status": "success"})
+                dashboard_id = cursor.lastrowid
+
+            return jsonify({"status": "success", "id": dashboard_id})
   
 @app.route('/dashboard_user/<int:id>', methods=['GET','POST'])
 def dashboard_user(id):
@@ -295,7 +297,7 @@ def invite_user():
         else:
             return jsonify({"error": "User not found"})
         
-@app.route('/dashboard_graficas', methods=['GET','POST'])
+@app.route('/dashboard_graficas', methods=['GET', 'POST'])
 def dashboard_graficas():
     if request.method == 'GET':
         with connection.cursor() as cursor:
@@ -304,12 +306,18 @@ def dashboard_graficas():
             return jsonify(dashboard_graficas)
     elif request.method == 'POST':
         data = request.get_json()
-        with connection.cursor() as cursor:
-            cursor.execute("INSERT INTO dashboard_graficas (dashboard_id, graficas_id) VALUES (%s, %s)", (data['id'],data['grafica_id']))
-            connection.commit()
+        dashboard_id = data['id']
+        graficas_ids = data['graficas_id']
+        
+        try:
+            with connection.cursor() as cursor:
+                for grafica_id in graficas_ids:
+                    cursor.execute("INSERT INTO dashboard_graficas (dashboard_id, graficas_id) VALUES (%s, %s)", (dashboard_id, grafica_id))
+                connection.commit()
             return jsonify({"status": "success"})
-        
-        
+        except Exception as e:
+            return jsonify({"status": "error", "message": str(e)})
+
 @app.route('/graficas', methods=['GET','POST','DELETE'])
 def graficas():
     if request.method == 'GET':
