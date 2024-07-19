@@ -17,7 +17,7 @@ app.config['SECRET_KEY'] = 'cluster_hub_secret_key'
 
 connection = pymysql.connect(host="localhost",
                        user="root",
-                       password="",
+                       password="root",
                        database="cluster_hub",
                        charset="utf8mb4",
                        cursorclass=pymysql.cursors.DictCursor)

@@ -27,6 +27,11 @@ const Config = () => {
                 titleStyle={{color:"#317b9b", fontSize: 25}}
                 onPress={logout}
                 />
+        <Button title="Administrar Sensores"
+                buttonStyle={styles.btnConfig}
+                titleStyle={{color:"#317b9b", fontSize: 25}}
+                onPress={() => router.push('/adminSensor')}
+                />
       </View>
     </View>
  </SafeAreaView>
