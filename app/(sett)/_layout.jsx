@@ -6,8 +6,6 @@ const settLayout = () =>{
         <>
             <Stack>
                 <Stack.Screen name='infoConfig' options={{ headerShown: false }}/>                 
-            </Stack>
-            <Stack>
                 <Stack.Screen name='adminSensor' options={{headerShown: false}}/>
             </Stack>
         </>
