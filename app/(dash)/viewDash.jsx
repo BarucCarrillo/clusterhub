@@ -15,12 +15,12 @@ const viewDash = () => {
                 <Header title={'NOMBRE DASHBOARD'}/>
                     <View style={styles.chartsContainer}>
                         <GridCharts/>
+                        <Text style={{marginTop: 25, fontSize: 18, fontFamily: 'Roboto', fontWeight: 'bold', color: "#317B9B"}}>Compartir</Text>
                         <Icon
                             raised
                             name="share"
                             type="font-awesome"
                             color="#317B9B"
-                            marginTop="5"
                             onPress={() => setShareVisible(true)}
                         />
                     </View>

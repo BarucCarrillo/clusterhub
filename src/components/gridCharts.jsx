@@ -1,38 +1,29 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet } from 'react-native';
+import MyChart from './MyChart';
+import MyPieChart from './MyPieChart';
+import MyProgressChart from './MyProgressChart';
+import MyBarChart from './MyBarChart';
+
 
 const GridCharts = () => {
   return (
     <View style={styles.container}>
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Image
-          source={{ uri: 'https://via.placeholder.com/180' }}
-          style={styles.mainImage}
-        />
-        <Text>NOMBRE</Text>
+      <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 35 }}>
+        <MyChart/>
+        <Text style={styles.text}>NOMBRE</Text>
       </View>
-      <View style={styles.row}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={{ uri: 'https://via.placeholder.com/150' }}
-            style={styles.image}
-          />
-          <Text>Texto 1</Text>
-        </View>
-        <View style={styles.imageContainer}>
-          <Image
-            source={{ uri: 'https://via.placeholder.com/150' }}
-            style={styles.image}
-          />
-          <Text>Texto 2</Text>
-        </View>
+      <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 35 }}>
+        <MyProgressChart/>
+        <Text style={styles.text}>NOMBRE</Text>
       </View>
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Image
-          source={{ uri: 'https://via.placeholder.com/180' }}
-          style={styles.mainImage}
-        />
-        <Text>NOMBRE</Text>
+      <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 35 }}>
+        <MyBarChart/>
+        <Text style={styles.text}>NOMBRE</Text>
+      </View>
+      <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 35 }}>
+        <MyPieChart/>
+        <Text style={styles.text}>NOMBRE</Text>
       </View>
     </View>
   );
@@ -43,22 +34,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  row: {
-    flexDirection: 'row',
-  },
-  mainImage: {
-    width: 180,
-    height: 180,
-    margin: 20,
-  },
-  image: {
-    width: 150,
-    height: 150,
-    margin: 20,
-  },
-  imageContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+  text: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontFamily: 'Roboto',
+    fontSize: 24,
+    color: "#317B9B",
+    marginTop: 25,
   },
 });
 
