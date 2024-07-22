@@ -48,6 +48,12 @@ const RootLayout = () => {
               headerShown: false,
             }}
             />
+            <Stack.Screen
+            name="(dash)"
+            options={{
+              headerShown: false,
+            }}
+            />
         </>
       </Stack>
     </GlobalProvider>

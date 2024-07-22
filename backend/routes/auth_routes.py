@@ -30,7 +30,7 @@ def login():
             "token": token
         }), 200
     
-    return jsonify({"error": "Invalid username/password", "correo": data['correo'], "contrasena": data['contrasena']}), 401
+    return jsonify({"error": "Invalid username/password"}), 401
 
 
 
@@ -59,6 +59,7 @@ def change_password(id):
         connection.close()
 
 
+auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/verify', methods=['POST'])
 def verify():

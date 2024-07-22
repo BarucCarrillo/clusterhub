@@ -59,6 +59,14 @@ const Panel = () => {
                     }
                     handlePress={() => router.push("/addpanel")}
                   />
+                  <CustomButton
+                    title="Visuailzar Dashboard"
+                    containerStyles={"bg-[#317B9B]"}
+                    textStyles={
+                      "text-lg font-semibold text-center mt-2 text-white"
+                    }
+                    handlePress={() => router.push("/viewDash")}
+                  />
                 </>
           <FlatList
             className=""

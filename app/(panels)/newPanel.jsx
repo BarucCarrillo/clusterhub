@@ -163,7 +163,7 @@ const newPanel = () => {
             <View style={styles.container}>
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => setWidgetVisible(false)}
+                onPress={() => setSaveVisible(true)}
               >
                 <Icon
                   name="check-circle"
@@ -171,7 +171,7 @@ const newPanel = () => {
                   color="#FFFFFF"
                   style={styles.icon}
                 />
-                <Text style={styles.buttonText}>Aceptrar</Text>
+                <Text style={styles.buttonText}>Aceptar</Text>
               </TouchableOpacity>
               <View style={{ width: 20 }}></View>
               <TouchableOpacity
@@ -205,7 +205,7 @@ const newPanel = () => {
               size={48}
               color="#317B9B"
               style={styles.icon}
-              onPress={() => router.replace("/newPanel")}
+              onPress={() => setWidgetVisible(false)}
             />
           </View>
         </View>
