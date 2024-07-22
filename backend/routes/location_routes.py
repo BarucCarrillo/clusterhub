@@ -58,14 +58,26 @@ def manage_state_country(id):
     
 @location_bp.route('/city_state/<int:id>', methods=['GET', 'PUT', 'DELETE'])
 def manage_city_state(id):
-    connection = get_db_connection()
-    if request.method == 'GET':
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM ciudad WHERE estado_id = %s", (id,))
-            locations = cursor.fetchall()
-        connection.close()
-        return jsonify(locations)
-    
+    connection = None
+    try:
+        connection = get_db_connection()
+        if request.method == 'GET':
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM ciudad WHERE estado_id = %s", (id,))
+                locations = cursor.fetchall()
+            return jsonify(locations)
+        # You can handle PUT and DELETE methods here
+        elif request.method == 'PUT':
+            # Handle PUT request logic here
+            pass
+        elif request.method == 'DELETE':
+            # Handle DELETE request logic here
+            pass
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if connection:
+            connection.close()
     
 
 @location_bp.route('/city', methods=['GET', 'POST'])

@@ -16,18 +16,19 @@ def manage_dashboards():
     elif request.method == 'POST':
         data = request.get_json()
         with connection.cursor() as cursor:
-            cursor.execute("INSERT INTO dashboard (nombre_dashboard, destacado, user_id) VALUES (%s, %s, %s)",
+            cursor.execute("INSERT INTO dashboards (nombre_dashboard, destacado, user_id) VALUES (%s, %s, %s)",
                            (data['nombre'], data['destacado'], data['user_id']))
             connection.commit()
         connection.close()
         return jsonify({"status": "success"})
 
-@dashboard_bp.route('/dashboard/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+@dashboard_bp.route('/dashboard/<int:id>', methods=['GET', 'PUT', 'DELETE', 'POST'])
 def manage_dashboard(id):
     connection = get_db_connection()
+    
     if request.method == 'GET':
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM dashboard WHERE id_dashboard=%s", (id,))
+            cursor.execute("SELECT * FROM dashboards WHERE id_dashboard=%s", (id,))
             dashboard = cursor.fetchone()
         connection.close()
         if dashboard:
@@ -37,7 +38,7 @@ def manage_dashboard(id):
     elif request.method == 'PUT':
         data = request.get_json()
         with connection.cursor() as cursor:
-            cursor.execute("UPDATE dashboard SET nombre_dashboard=%s, descripcion=%s, destacado=%s WHERE id_dashboard=%s",
+            cursor.execute("UPDATE dashboards SET nombre_dashboard=%s, descripcion=%s, destacado=%s WHERE id_dashboard=%s",
                            (data['nombre'], data['descripcion'], data['destacado'], id))
             connection.commit()
         connection.close()
@@ -45,24 +46,28 @@ def manage_dashboard(id):
 
     elif request.method == 'DELETE':
         with connection.cursor() as cursor:
-            cursor.execute("DELETE FROM dashboard WHERE id_dashboard=%s", (id,))
+            cursor.execute("DELETE FROM dashboards WHERE id_dashboard=%s", (id,))
             connection.commit()
         connection.close()
         return jsonify({"status": "success"})
-    elif request.method == 'POST':
-                data = request.get_json()
-                # Asegúrate de que 'destacado' sea un valor booleano
-                data['destacado'] = True if data.get('destacado', False) else False
 
-                with connection.cursor() as cursor:
-                    cursor.execute(
-                        "INSERT INTO dashboards (nombre_dashboard, descripcion, destacado, user_id) VALUES (%s, %s, %s, %s)",
-                        (data['nombre'], data['descripcion'], data['destacado'], id)
-                    )
-                    connection.commit()
-                    dashboard_id = cursor.lastrowid
-                return jsonify({"status": "success", "id": dashboard_id})
-    
+    elif request.method == 'POST':
+        data = request.get_json()
+        
+        # Asegúrate de que 'destacado' sea un valor booleano
+        data['destacado'] = True if data.get('destacado', False) else False
+        
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "INSERT INTO dashboards (nombre_dashboard, descripcion, destacado, user_id) VALUES (%s, %s, %s, %s)",
+                (data['nombre'], data['descripcion'], data['destacado'], id)
+            )
+            connection.commit()
+            dashboard_id = cursor.lastrowid
+        
+        connection.close()
+        return jsonify({"status": "success", "id": dashboard_id})
+
 @dashboard_bp.route('/dashboard_user/<int:id>', methods=['GET','POST'])
 def dashboard_user(id):
     connection = get_db_connection()
