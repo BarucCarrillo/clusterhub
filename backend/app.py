@@ -10,6 +10,9 @@ import os
 
 load_dotenv()
 
+
+
+
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'cluster_hub_secret_key'
@@ -82,6 +85,7 @@ def verify():
         return jsonify({"error": "Token has expired"})
     except jwt.InvalidTokenError:
         return jsonify({"error": "Invalid token"})
+    
 @app.route('/users', methods=['GET','POST'])
 def users():
         if request.method == 'GET':
@@ -98,8 +102,15 @@ def users():
                 connection.commit()
                 token = jwt.encode({"correo":data['correo'],"exp":datetime.datetime.utcnow()+datetime.timedelta(hours=24)
                                     }, app.config['SECRET_KEY'], algorithm="HS256")
+                response =  { "message": "Usuario creado exitosamente",
+                    "id": cursor.lastrowid,
+                   "nombre": data['nombre'],
+                    "apellidos": data['apellidos'],
+                    "correo": data['correo'],
+                    "token": token
+                    }
                 print("Generated JWT Token: ", token)
-                return jsonify({"status": "success"})
+                return jsonify(response), 200
 
 @app.route('/users/<int:id>', methods=['GET','PUT','DELETE'])
 def user(id):
@@ -337,6 +348,9 @@ def graficas():
             cursor.execute("DELETE FROM graficas WHERE id_grafica=%s", (data['id']))
             connection.commit()
             return jsonify({"status": "success"})
+        
+        
+        
     
 
 if __name__ == '__main__':

@@ -17,6 +17,8 @@ const newPanel = () => {
   const [saveVisible, setSaveVisible] = useState(false);
   const [selectedWidgets, setSelectedWidgets] = useState(new Set()); // Almacena los IDs seleccionados
   const {insertWidgetsInDashboard} = useGlobalContext();
+
+  // console.log(user.id);
   const [form, setForm] = useState({
     nombre: "",
     descripcion: "",

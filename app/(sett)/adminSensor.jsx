@@ -8,6 +8,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../../src/components/CustomButton";
 
 const adminSensor = () => {
+
+
+    const  [Ciudad, setCiudad] = useState([]);
+
+
     
     const header = ['Aula','Usario', 'Topic', 'Ciudad']
     const data = [ ['B-1', 'Cristiano Ronaldo', 'Humedad', 'Metrocida'] ]

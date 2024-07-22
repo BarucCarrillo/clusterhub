@@ -19,6 +19,7 @@ import { router } from "expo-router";
 const Panel = () => {
   const [data, setData] = useState(null);
   const { user } = useGlobalContext();
+  // console.log(user.id)
 
   let id = user.id;
  
@@ -62,11 +63,10 @@ const Panel = () => {
           <FlatList
             className=""
             data={data}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id_dashboard.toString()}
             renderItem={({ item }) => {
               return (
                 <HomeCardDash
-                  id={item.id_dashboard}
                   title={item.nombre_dashboard}
                   description={item.descripcion}
                   image={item.image}

@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, TextInput, ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import { router } from "expo-router";
 import Header from "../../src/components/header";
-import { register } from "../../lib";
+import {useGlobalContext} from '../../context/GlobalProvider'
 const Register = () => {
   const [form, setForm] = useState({
     nombre: "",
@@ -12,6 +12,8 @@ const Register = () => {
     correo: "",
     contrasena: "",
   });
+
+  const { isLogged, loading, setIsLogged,signUp} = useGlobalContext();
 
   const submit = async () => {
     if (
@@ -24,12 +26,21 @@ const Register = () => {
       return;
     }
     try {
-      const response = await register(form);
+      const response = await signUp(form);
       console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
+
+
+  React.useEffect(() => {
+    if (isLogged) {
+      router.replace("/home");
+    }
+
+
+  }, []);
 
   return (
     <ScrollView style={styles.rectangleView}>

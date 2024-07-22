@@ -3,7 +3,7 @@ import { BACKEND_API } from "@env"; // Asegúrate de que esta línea esté prese
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
-import { login } from "../lib";
+import { login,register } from "../lib";
 import { router } from "expo-router";
 const GlobalContext = createContext();
 
@@ -151,6 +151,34 @@ const GlobalProvider = ({ children }) => {
 
   };
 
+
+  const signUp = async (data) => {
+    try {
+      const response = await register(data);
+      if (response.token) {
+        await AsyncStorage.setItem("token", response.token);
+        Alert.alert("Signup successful", `Welcome ${response.nombre}`);
+        setIsLogged(true);
+        const userData = {
+          id: response.id,
+          nombre: response.nombre,
+          apellidos: response.apellidos,
+          correo: response.correo,
+        };
+        await AsyncStorage.setItem("user", JSON.stringify(userData));
+        setUser(userData);
+        console.log("User after signup:", userData);
+      } else {
+        console.log(response);
+        Alert.alert("Signup failed", response.error || "Unknown error");
+      }
+    } catch (error) {
+      console.error("Signup error", error);
+      Alert.alert("Signup error", error.message || "Unknown");
+  }
+}
+
+
   const logout = async () => {
     try {
       await AsyncStorage.removeItem("token");
@@ -206,6 +234,7 @@ const GlobalProvider = ({ children }) => {
         updateInfoUser,
         userChangePassword,
         insertWidgetsInDashboard,
+        signUp
       }}
     >
       {children}
