@@ -29,8 +29,13 @@ yarn-error.*
 *.pem
 
 # local env files
+/backend/.env
 .env*.local
-
 
 # typescript
 *.tsbuildinfo
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
