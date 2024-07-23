@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import {View, Text, TextInput, ScrollView, StyleSheet, TouchableOpacity, Modal} from "react-native";
+import {View, Text, TextInput, ScrollView, StyleSheet, TouchableOpacity, Modal, Button} from "react-native";
 import { Icon } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../src/components/header";
 import EditGridCharts from "../../src/components/EditGridCharts";
 import { router } from "expo-router";
-
+import CardGrid from "../../src/components/gridWidgets";
 
 const editPanel = () => {
 
+  const [widgetVisible, setWidgetVisible] = useState(false);
   const [saveVisible, setSaveVisible] = useState(false);
+  
 
     return(
         <SafeAreaView>
@@ -23,6 +25,9 @@ const editPanel = () => {
                     </View>
                     <View>
                         <EditGridCharts/>
+                    </View>
+                    <View style={styles.btnWidget}>
+                      <Button title="Agregar Nuevo Widget" color={"#95D7CA"} onPress={() => setWidgetVisible(true)}></Button>
                     </View>
                     <View style={styles.container}>
                         <TouchableOpacity 
@@ -62,6 +67,62 @@ const editPanel = () => {
                               </View>
                           </View>
                     </Modal>
+
+                    <Modal
+                      animationType="slide"
+                      transparent={true}
+                      visible={widgetVisible}
+                      onRequestClose={() => setWidgetVisible(false)}
+                    >
+                      <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                          <Text
+                            style={{ fontSize: 20, color: "#317B9B", fontWeight: "bold" }}
+                          >
+                            Selecciona los widgets que deseas que aparezcan en el panel
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 18,
+                              color: "#95D7CA",
+                              fontWeight: "bold",
+                              marginBottom: 20,
+                            }}
+                          >
+                            Máximo de 4 widgets
+                          </Text>
+                          {/* <CardGrid /> */}
+                          <View style={styles.container}>
+                            <TouchableOpacity
+                              style={styles.button}
+                              onPress={() => setSaveVisible(true)}
+                            >
+                              <Icon
+                                name="check-circle"
+                                size={20}
+                                color="#FFFFFF"
+                                style={styles.icon}
+                              />
+                              <Text style={styles.buttonText}>Aceptar</Text>
+                            </TouchableOpacity>
+                            <View style={{ width: 20 }}></View>
+                            <TouchableOpacity
+                              style={[styles.button, styles.cancelButton]}
+                              onPress={() => setWidgetVisible(false)}
+                            >
+                              <Icon
+                                name="cancel"
+                                size={20}
+                                color="#FFFFFF"
+                                style={styles.icon}
+                              />
+                              <Text style={styles.buttonText}>Cancelar</Text>
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      </View>
+                    </Modal>
+
             </ScrollView>
         </SafeAreaView>
     )
@@ -72,13 +133,13 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
-        marginTop: 50,
+        marginTop: 30,
         marginBottom: 50,
       },
       button: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: "#1976D2",
+        backgroundColor: "#317B9B",
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
@@ -104,6 +165,12 @@ const styles = StyleSheet.create({
       input: {
         fontSize: 18,
         marginLeft: 15,
+      },
+      btnWidget: {
+        width: '80%',
+        display: 'flex',
+        alignSelf: 'center',
+        marginTop: 30,
       },
       modalContainer: {
         flex: 1,
