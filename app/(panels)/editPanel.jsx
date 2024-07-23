@@ -95,7 +95,7 @@ const editPanel = () => {
                           <View style={styles.container}>
                             <TouchableOpacity
                               style={styles.button}
-                              onPress={() => setSaveVisible(true)}
+                              onPress={() => setWidgetVisible(false)}
                             >
                               <Icon
                                 name="check-circle"

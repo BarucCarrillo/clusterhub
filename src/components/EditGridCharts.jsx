@@ -9,6 +9,7 @@ import MyBarChart from './MyBarChart';
 
 const GridCharts = () => {
     const [modalVisible, setModalVisible] = useState(false);
+    const [deleteVisible, setDeleteVisible] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -23,7 +24,8 @@ const GridCharts = () => {
             <View style={{width: 30}}></View>
             <Button 
                 title='Eliminar'
-                color={'#EF4235'}/>
+                color={'#EF4235'}
+                onPress={() => setDeleteVisible(true)}/>
         </View>
       </View>
       <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 35 }}>
@@ -37,7 +39,8 @@ const GridCharts = () => {
             <View style={{width: 30}}></View>
             <Button 
                 title='Eliminar'
-                color={'#EF4235'}/>
+                color={'#EF4235'}
+                onPress={() => setDeleteVisible(true)}/>
         </View>
       </View>
       <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 35 }}>
@@ -51,7 +54,8 @@ const GridCharts = () => {
             <View style={{width: 30}}></View>
             <Button 
                 title='Eliminar'
-                color={'#EF4235'}/>
+                color={'#EF4235'}
+                onPress={() => setDeleteVisible(true)}/>
         </View>
       </View>
       <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 35 }}>
@@ -65,7 +69,8 @@ const GridCharts = () => {
             <View style={{width: 30}}></View>
             <Button 
                 title='Eliminar'
-                color={'#EF4235'}/>
+                color={'#EF4235'}
+                onPress={() => setDeleteVisible(true)}/>
         </View>
       </View>
 
@@ -84,6 +89,33 @@ const GridCharts = () => {
                     color="#317B9B"
                     onPress={() => setModalVisible(false)}
                     />
+                </View>
+            </View>
+      </Modal>
+
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={deleteVisible}
+        onRequestClose={() => setDeleteVisible(false)}>
+            <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                    <Text style={styles.modalTitle}>¿Desea eliminar el widget?</Text>
+                    <View style={{flexDirection: 'row', display: 'flex', alignSelf: 'center'}}>
+                      <Icon
+                      name="check-circle"
+                      size={48}
+                      color="#317B9B"
+                      onPress={() => setDeleteVisible(false)}
+                      />
+                      <View style={{width: 30}}></View>
+                      <Icon
+                      name="cancel"
+                      size={48}
+                      color="#EF4235"
+                      onPress={() => setDeleteVisible(false)}
+                      />
+                    </View>
                 </View>
             </View>
       </Modal>
