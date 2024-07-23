@@ -1,21 +1,16 @@
-import {
-  View,
-  Text,
-  FlatList,
-  ScrollView,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import HomeCardDash from "../../src/components/HomeCardDash";
+import React, {useState, useEffect} from "react";
+import {View, Text, FlatList} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { images, svg } from "../../constants";
-import CustomButton from "../../src/components/CustomButton";
 import Header from "../../src/components/header";
+import AdmCardDash from "../../src/components/AdmCardDash";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { getDashboardUser } from "../../lib";
-import { router } from "expo-router";
-const Panel = () => {
-  const [data, setData] = useState(null);
+import { StatusBar } from "expo-status-bar";
+import CustomButton from "../../src/components/CustomButton";
+
+
+const admPanel = () => {
+    const [data, setData] = useState(null);
   const { user } = useGlobalContext();
   // console.log(user.id)
 
@@ -38,34 +33,16 @@ const Panel = () => {
     <>
       <SafeAreaView className="h-full">
         <StatusBar barStyle="light-content" hidden={false} />
-        <ScrollView className="bg-back">
-          <Header title={"Paneles"} />
-          <>
-                  <CustomButton
-                    title="Agregar panel"
-                    containerStyles={"bg-[#317B9B]"}
-                    textStyles={
-                      "text-lg font-semibold text-center mt-2 text-white"
-                    }
-                    handlePress={() => router.push("/newPanel")}
-                  />
-                  <CustomButton
-                    title="Administrar panel"
-                    containerStyles={"bg-[#317B9B]"}
-                    textStyles={
-                      "text-lg font-semibold text-center mt-2 text-white"
-                    }
-                    handlePress={() => router.push("/admPanel")}
-                  />
-                  
-                </>
+        <View className="bg-back">
+          <Header title={"Administrar Paneles"} />
+
           <FlatList
             className=""
             data={data}
             keyExtractor={(item) => item.id_dashboard.toString()}
             renderItem={({ item }) => {
               return (
-                <HomeCardDash
+                <AdmCardDash
                   title={item.nombre_dashboard}
                   description={item.descripcion}
                   image={item.image}
@@ -88,10 +65,10 @@ const Panel = () => {
               );
             }}
           />
-        </ScrollView>
+        </View>
       </SafeAreaView>
     </>
   );
-};
+}
 
-export default Panel;
+export default admPanel
