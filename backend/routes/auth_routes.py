@@ -59,7 +59,6 @@ def change_password(id):
         connection.close()
 
 
-auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/verify', methods=['POST'])
 def verify():
