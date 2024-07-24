@@ -30,7 +30,7 @@ def login():
             "token": token
         }), 200
     
-    return jsonify({"error": "Invalid username/password"}), 401
+    return jsonify({"error": "Invalid username/password", "correo": data['correo'], "contrasena": data['contrasena']}), 401
 
 
 

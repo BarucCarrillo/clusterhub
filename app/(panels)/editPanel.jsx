@@ -6,12 +6,68 @@ import Header from "../../src/components/header";
 import EditGridCharts from "../../src/components/EditGridCharts";
 import { router } from "expo-router";
 import CardGrid from "../../src/components/gridWidgets";
+import { createDashboard } from "../../lib";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const editPanel = () => {
-
+  const { user } = useGlobalContext();
   const [widgetVisible, setWidgetVisible] = useState(false);
   const [saveVisible, setSaveVisible] = useState(false);
-  
+  const [selectedWidgets, setSelectedWidgets] = useState(new Set()); // Almacena los IDs seleccionados
+  const {insertWidgetsInDashboard} = useGlobalContext();
+
+  // console.log(user.id);
+  const [form, setForm] = useState({
+    nombre: "",
+    descripcion: "",
+    destacado: 0,
+    id: user.id,
+  });
+
+
+
+  const handleWidgetSelect = (id) => {
+    setSelectedWidgets((prevSelected) => {
+      const newSelected = new Set(prevSelected);
+      if (newSelected.has(id)) {
+        newSelected.delete(id);
+      } else {
+        if (newSelected.size < 4) {
+          newSelected.add(id);
+        }
+      }
+
+      return newSelected;
+    });
+  };
+
+
+
+
+  const submit = async () => {
+    try {
+      const response = await createDashboard(form);
+      if (response.status === 'success'){
+        const dashboardId = response.id;
+        const widgets = Array.from(selectedWidgets);
+        console.log(widgets + " widgets submit");
+        await insertWidgetsInDashboard(dashboardId, widgets);
+        setSaveVisible(true);
+        router.push("/panel");
+        // console.log(response.id)
+
+        // console.log(response);
+      }else{
+        console.log("Error al crear el panel");
+      }
+   
+    } catch (error) {
+      console.log(error + " error");
+    }
+  };
+
+
+  console.log(selectedWidgets); 
 
     return(
         <SafeAreaView>
@@ -77,7 +133,7 @@ const editPanel = () => {
                       <View style={styles.modalContainer}>
                         <View style={styles.modalContent}>
                           <Text
-                            style={{ fontSize: 20, color: "#317B9B", fontWeight: "bold" }}
+                            style={{ fontSize: 20, color: "#317B9B", fontWeight: "bold", textAlign: 'center', }}
                           >
                             Selecciona los widgets que deseas que aparezcan en el panel
                           </Text>
@@ -87,11 +143,12 @@ const editPanel = () => {
                               color: "#95D7CA",
                               fontWeight: "bold",
                               marginBottom: 20,
+                              textAlign: 'center',
                             }}
                           >
                             Máximo de 4 widgets
                           </Text>
-                          {/* <CardGrid /> */}
+                          <CardGrid selectedWidgets={selectedWidgets} onSelect={handleWidgetSelect} />
                           <View style={styles.container}>
                             <TouchableOpacity
                               style={styles.button}
