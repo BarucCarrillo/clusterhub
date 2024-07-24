@@ -14,6 +14,7 @@ import Header from "../../src/components/header";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { getDashboardUser } from "../../lib";
 import { router } from "expo-router";
+import Notification from "../../src/components/notification";
 const Panel = () => {
   const [data, setData] = useState(null);
   const { user } = useGlobalContext();
@@ -57,7 +58,7 @@ const Panel = () => {
                     }
                     handlePress={() => router.push("/admPanel")}
                   />
-                  
+                  <Notification/>
                 </>
           <FlatList
             className=""

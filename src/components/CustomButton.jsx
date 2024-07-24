@@ -7,7 +7,7 @@ const CustomButton = ({handlePress,title,containerStyles,borderColor,textColor,t
     onPress={handlePress}
         activeOpacity={0.7}
         
-        className={` rounded-xl min-h-[50px] w-[80%] flex self-center justify-center mt-4 ${containerStyles}`}
+        className={` rounded-xl min-h-[50px] w-[80%] flex self-center justify-center mt-4 mb-4 ${containerStyles}`}
     >
         <Text className={`text-${textColor} font-semibold text-lg m-auto ${textStyles}`}>
             {title}

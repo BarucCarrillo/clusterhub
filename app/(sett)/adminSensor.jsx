@@ -584,7 +584,7 @@ const adminSensor = () => {
       />
 
       <CustomButton
-        title="Agregar panel"
+        title="Agregar Sensor"
         containerStyles={"bg-[#317B9B]"}
         textStyles={"text-lg font-semibold text-center mt-2 text-white"}
         handlePress={() => setNewSensor(true)}
@@ -643,12 +643,12 @@ const adminSensor = () => {
                   color="#FFFFFF"
                   style={styles.icon}
                 />
-                <Text style={styles.buttonText}>Crear</Text>
+                <Text style={styles.buttonText}>Guardar</Text>
               </TouchableOpacity>
               <View style={{ width: 20 }}></View>
               <TouchableOpacity
                 style={[styles.button, styles.cancelButton]}
-                onPress={() => setModalVisible(false)}
+                onPress={() => setNewSensor(false)}
               >
                 <Icon
                   name="cancel"
