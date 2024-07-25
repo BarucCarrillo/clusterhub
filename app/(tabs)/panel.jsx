@@ -58,7 +58,6 @@ const Panel = () => {
                     }
                     handlePress={() => router.push("/admPanel")}
                   />
-                  <Notification/>
                 </>
           <FlatList
             className=""
