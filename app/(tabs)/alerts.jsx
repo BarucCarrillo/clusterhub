@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import NotificationCard from "../../src/components/NotificationCard";
 import Header from "../../src/components/header";
 const Alert = () => {
+  //DELVELVE A LA PANTALLA LAS NOTIFCACIONES RECIBIDAS
   return (
     <>
       <SafeAreaView

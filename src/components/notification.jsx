@@ -61,8 +61,9 @@ export default function Notification() {
     await AsyncStorage.setItem('notifications', JSON.stringify(newNotifications));
   };
 
+  //VISTA LA CUAL DEVUELVE EL CONTENEDOR CON LA NOTIFICACIÓN 
   return (
-    <View>
+    <View> 
       <Button
             title="Presiona para programar una notificación"
             onPress={async () => {
@@ -100,6 +101,7 @@ export default function Notification() {
 async function registerForPushNotificationsAsync() {
   let token;
 
+  //VERIFICA EN QUE PLATAFORMA SE EJECUTA LA APLICACIÓN
   if (Platform.OS === 'android') {
     await Notifications.setNotificationChannelAsync('default', {
       name: 'default',
