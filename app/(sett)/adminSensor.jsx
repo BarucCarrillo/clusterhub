@@ -190,7 +190,7 @@ const adminSensor = () => {
     }));
   };
 
-  const header = ["Aula", "Usuario", "Topic", "Ciudad"];
+  const header = ["", "", "", ""];
   const handleDelete = async (id) => {
     try {
       await deleteSensor(id);
@@ -283,7 +283,7 @@ const adminSensor = () => {
 
       <FlatList
         keyExtractor={(item) => item.id_sensor}
-        className="px-4 mb-10"
+        className="px-4 mb-4"
         data={sensor}
         renderItem={({ item }) => {
           return (
@@ -365,65 +365,65 @@ const adminSensor = () => {
                 }}
                 data={header}
               />
-               <RNPickerSelect
-               defaultValue={item.id_pais}
-          onValueChange={(value) => setSelectedPais(value)}
-          placeholder={{ label: "Seleccione un país", value: null }}
-          items={pais.map((item) => ({
-            label: item.nombre_pais,
-            value: item.id_pais,
-          }))}
-        />
-        <RNPickerSelect
-          defaultValue={item.id_estado}
-          onValueChange={(value) => setSelectedEstado(value)}
-          placeholder={{ label: "Seleccione un estado", value: null }}
-          items={estado.map((item) => ({
-            label: item.nombre_estado,
-            value: item.id_estado,
-          }))}
-          disabled={!selectedPais}
-        />
-        <RNPickerSelect
-          defaultValue={item.id_ciudad}
-          onValueChange={(value) => setSelectedCiudad(value)}
-          placeholder={{ label: "Seleccione una ciudad", value: null }}
-          items={ciudad.map((item) => ({
-            label: item.nombre_ciudad,
-            value: item.id_ciudad,
-          }))}
-          disabled={!selectedEstado}
-        />
-        <RNPickerSelect
-          defaultValue={item.id_universidad}
-          onValueChange={(value) => setSelectedUniversidad(value)}
-          placeholder={{ label: "Seleccione una universidad", value: null }}
-          items={universidad.map((item) => ({
-            label: item.nombre_universidad,
-            value: item.id_universidad,
-          }))}
-          disabled={!selectedCiudad}
-        />
-        <RNPickerSelect
-          defaultValue={item.id_edificio}
-          onValueChange={(value) => setSelectedEdificio(value)}
-          placeholder={{ label: "Seleccione un edificio", value: null }}
-          items={edificio.map((item) => ({
-            label: item.nombre_edificio,
-            value: item.id_edificio,
-          }))}
-          disabled={!selectedUniversidad}
-        />
-        <RNPickerSelect
-          defaultValue={item.id_aula}
-          onValueChange={handleAulaChange}
-          placeholder={{ label: "Seleccione un aula", value: null }}
-          items={aula.map((item) => ({
-            label: item.nombre_aula,
-            value: item.id_aula,
-          }))}
-          disabled={!selectedEdificio}
-        />
+              <RNPickerSelect
+                defaultValue={item.id_pais}
+                onValueChange={(value) => setSelectedPais(value)}
+                placeholder={{ label: "Seleccione un país", value: null }}
+                items={pais.map((item) => ({
+                  label: item.nombre_pais,
+                  value: item.id_pais,
+                }))}
+              />
+              <RNPickerSelect
+                defaultValue={item.id_estado}
+                onValueChange={(value) => setSelectedEstado(value)}
+                placeholder={{ label: "Seleccione un estado", value: null }}
+                items={estado.map((item) => ({
+                  label: item.nombre_estado,
+                  value: item.id_estado,
+                }))}
+                disabled={!selectedPais}
+              />
+              <RNPickerSelect
+                defaultValue={item.id_ciudad}
+                onValueChange={(value) => setSelectedCiudad(value)}
+                placeholder={{ label: "Seleccione una ciudad", value: null }}
+                items={ciudad.map((item) => ({
+                  label: item.nombre_ciudad,
+                  value: item.id_ciudad,
+                }))}
+                disabled={!selectedEstado}
+              />
+              <RNPickerSelect
+                defaultValue={item.id_universidad}
+                onValueChange={(value) => setSelectedUniversidad(value)}
+                placeholder={{ label: "Seleccione una universidad", value: null }}
+                items={universidad.map((item) => ({
+                  label: item.nombre_universidad,
+                  value: item.id_universidad,
+                }))}
+                disabled={!selectedCiudad}
+              />
+              <RNPickerSelect
+                defaultValue={item.id_edificio}
+                onValueChange={(value) => setSelectedEdificio(value)}
+                placeholder={{ label: "Seleccione un edificio", value: null }}
+                items={edificio.map((item) => ({
+                  label: item.nombre_edificio,
+                  value: item.id_edificio,
+                }))}
+                disabled={!selectedUniversidad}
+              />
+              <RNPickerSelect
+                defaultValue={item.id_aula}
+                onValueChange={handleAulaChange}
+                placeholder={{ label: "Seleccione un aula", value: null }}
+                items={aula.map((item) => ({
+                  label: item.nombre_aula,
+                  value: item.id_aula,
+                }))}
+                disabled={!selectedEdificio}
+              />
               
             </Table>
             <View style={styles.btnContainer}>

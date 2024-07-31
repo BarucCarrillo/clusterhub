@@ -6,6 +6,7 @@ import { Button } from "react-native-elements";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { Alert } from "react-native";
 import { router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const newPassword = () => {
   const [form, setForm] = useState({
@@ -39,8 +40,9 @@ const newPassword = () => {
   };
 
   return (
+    <SafeAreaView> 
     <View style={styles.rectangleView}>
-      <Header />
+      <Header title={'Nueva Contraseña'}/>
       <View className="mt-10">
         <Text style={styles.label}>Contraseña actual</Text>
       </View>
@@ -50,8 +52,6 @@ const newPassword = () => {
         onChangeText={(e) => setForm({ ...form, password: e })}
         style={styles.input}
       />
-
-      <Text style={styles.labelTitle}>Ingresa tu nueva contraseña</Text>
 
       <View style={styles.passContainer}>
         <Text style={styles.label}>Nueva Contraseña</Text>
@@ -79,39 +79,19 @@ const newPassword = () => {
         onPress={submit}
       />
     </View>
+    </SafeAreaView> 
   );
 };
 
 const styles = StyleSheet.create({
-  rectangleView: {
-    borderTopLeftRadius: 60,
-    backgroundColor: "#f5f5f5",
-    flex: 1,
-    width: "100%",
-  },
-  labelTitle: {
-    fontSize: 30,
-    fontFamily: "Roboto",
-    color: "#317b9b",
-    textAlign: "center",
-    marginTop: 56,
-    marginBottom: 15,
-    fontWeight: "bold",
-  },
-  emailContainer: {
-    marginTop: 100,
-    marginLeft: 57,
-  },
   label: {
     fontSize: 28,
     fontFamily: "Roboto",
     color: "#317b9b",
     textAlign: "left",
     marginBottom: 20,
-    marginLeft: 50,
-  },
-  passContainer: {
-    marginTop: 80,
+    marginLeft: 30,
+    marginTop: 20,
   },
   input: {
     height: 60,

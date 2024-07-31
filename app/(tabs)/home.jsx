@@ -24,13 +24,7 @@ const Home = () => {
           <Header title={'Ubicación'}/>
             <Image style={styles.img} source={{uri:'https://img.freepik.com/free-vector/global-warming-concept-illustration_114360-8510.jpg?t=st=1720725993~exp=1720734593~hmac=c75bdc5ff329378c9b8fb51de50dc483bf20e95508a9ce487d3e2c19c5cca884&w=996',}}></Image>
             <Text style={styles.textTittle}>NIVEL DE POLVO Y CONTAMINACIÓN</Text>
-            <Text style={styles.textFav}>Favorito 
-             
-            <Icon
-              name='heart'
-              type='font-awesome'
-              color='#317B9B'
-              onPress={() => console.log('hello')} /></Text>
+
             <Text style={styles.textInfo}>INFORMACIÓN ADICIONAL</Text>
             <Text style={styles.textRecom}>RECOMENDACIONES</Text>
             <View style={styles.cardContainer}>
@@ -85,15 +79,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
     marginTop: 15,
-  },
-  textFav: {
-    color: "#317B9B", 
-    fontWeight: 'bold', 
-    textAlign: 'left',
-    marginLeft: 35,
-    fontSize: 25,
-    marginTop: 25,
-    marginBottom: 15,
   },
   textInfo: {
     color: "#317B9B", 
