@@ -148,8 +148,10 @@ const GlobalProvider = ({ children }) => {
       console.error("Error:", error);
       throw error;
     }
-
   };
+
+
+  
 
 
   const signUp = async (data) => {

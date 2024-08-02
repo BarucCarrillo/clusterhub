@@ -47,3 +47,28 @@ def graficas():
             connection.commit()
             return jsonify({"status": "success"})
         
+        
+        
+@widgets_bp.route('/dashboard_graficas/<int:id>', methods=['GET','DELETE','PATCH'])
+def edit_graficasDash(id):
+    connection = get_db_connection()
+    if request.method == 'GET':
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM dashboard_graficas WHERE dashboard_id=%s", (id))
+            graficas = cursor.fetchall()
+            return jsonify(graficas)
+    elif request.method == 'DELETE':
+        with connection.cursor() as cursor:
+            cursor.execute("DELETE FROM dashboard_graficas WHERE dashboard_id=%s", (id))
+            connection.commit()
+            return jsonify({"status": "success"})
+    elif request.method == 'PATCH':
+        data = request.get_json()
+        graficas_ids = data['graficas_id']
+        with connection.cursor() as cursor:
+            cursor.execute("DELETE FROM dashboard_graficas WHERE dashboard_id=%s", (id))
+            for grafica_id in graficas_ids:
+                cursor.execute("INSERT INTO dashboard_graficas (dashboard_id, graficas_id) VALUES (%s, %s)", (id, grafica_id))
+            connection.commit()
+            return jsonify({"status": "success"})
+        

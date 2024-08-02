@@ -10,23 +10,13 @@ import {
   TextInput,
   FlatList,
 } from "react-native";
+import SensorCard from "../../src/components/sensorCard";
 import Header from "../../src/components/header";
 import { Card, Icon } from "react-native-elements";
 import { Table, Row, Rows } from "react-native-table-component";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  getCiudadEstadoById,
-  getPais,
-  getEstadoPaisById,
-  getUniversidadCiudadById,
-  getUniversidadEdificioById,
-  getEdificioAulaById,
-  getTypeSensor,
-  crearSensor,
-  getSensorUser,
-  deleteSensor,
-} from "../../lib";
+import { crearSensor, getSensorUser, deleteSensor, editSensor } from "../../lib";
 import CustomButton from "../../src/components/CustomButton";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import RNPickerSelect from "react-native-picker-select";
@@ -35,40 +25,22 @@ const adminSensor = () => {
   const { user, loading } = useGlobalContext();
 
   const id = user.id;
-  const [ciudad, setCiudad] = useState([]);
-  const [pais, setPais] = useState([]);
-  const [estado, setEstado] = useState([]);
-  const [universidad, setUniversidad] = useState([]);
-  const [edificio, setEdificio] = useState([]);
-  const [tipo_sensor, setTipo_sensor] = useState([]);
 
-  const [aula, setAula] = useState([]);
   const [form, setForm] = useState({
     nombre: "",
     tipo_sensor: "",
-    aula_id: "",
     user_id: id,
-    topic: "",
+    topico: "",
+    pais: "",
+    ciudad: "",
+    universidad: "",
+    edificio: "",
+    aula: "",
   });
-  
-  const [selectedPais, setSelectedPais] = useState(null);
-  const [selectedEstado, setSelectedEstado] = useState(null);
-  const [selectedCiudad, setSelectedCiudad] = useState(null);
-  const [selectedUniversidad, setSelectedUniversidad] = useState(null);
-  const [selectedEdificio, setSelectedEdificio] = useState(null);
+
   const [sensor, setSensor] = useState([]);
-  const [selectedAula, setSelectedAula] = useState(null);
 
   // Fetch functions
-
-  const fetchTypeSensor = async () => {
-    try {
-      const response = await getTypeSensor();
-      setTipo_sensor(response);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   const fetchSensorUser = async () => {
     try {
@@ -78,117 +50,13 @@ const adminSensor = () => {
       console.error("Error:", error);
     }
   };
-  const fetchPais = async () => {
-    try {
-      const response = await getPais();
-      setPais(response);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const fetchEstadoPais = async (id) => {
-    try {
-      const response = await getEstadoPaisById(id);
-      setEstado(response);
-      setSelectedEstado(null); // Reset state
-      setCiudad([]); // Clear city list
-      setUniversidad([]); // Clear university list
-      setEdificio([]); // Clear building list
-      setAula([]); // Clear classroom list
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const fetchCiudadEstado = async (id) => {
-    try {
-      const response = await getCiudadEstadoById(id);
-      setCiudad(response);
-      setSelectedCiudad(null); // Reset city
-      setUniversidad([]); // Clear university list
-      setEdificio([]); // Clear building list
-      setAula([]); // Clear classroom list
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const fetchUniversidadCiudad = async (id) => {
-    try {
-      const response = await getUniversidadCiudadById(id);
-      setUniversidad(response);
-      setSelectedUniversidad(null); // Reset university
-      setEdificio([]); // Clear building list
-      setAula([]); // Clear classroom list
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const fetchEdificioUniversidad = async (id) => {
-    try {
-      const response = await getUniversidadEdificioById(id);
-      setEdificio(response);
-      setSelectedEdificio(null); // Reset building
-      setAula([]); // Clear classroom list
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const fetchAula = async (id) => {
-    try {
-      const response = await getEdificioAulaById(id);
-      setAula(response);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   useEffect(() => {
-    fetchPais();
-    fetchTypeSensor();
     fetchSensorUser();
   }, []);
 
-  useEffect(() => {
-    if (selectedPais) {
-      fetchEstadoPais(selectedPais);
-    }
-  }, [selectedPais]);
 
-  useEffect(() => {
-    if (selectedEstado) {
-      fetchCiudadEstado(selectedEstado);
-    }
-  }, [selectedEstado]);
 
-  useEffect(() => {
-    if (selectedCiudad) {
-      fetchUniversidadCiudad(selectedCiudad);
-    }
-  }, [selectedCiudad]);
-
-  useEffect(() => {
-    if (selectedUniversidad) {
-      fetchEdificioUniversidad(selectedUniversidad);
-    }
-  }, [selectedUniversidad]);
-
-  useEffect(() => {
-    if (selectedEdificio) {
-      fetchAula(selectedEdificio);
-    }
-  }, [selectedEdificio]);
-
-  const handleAulaChange = (value) => {
-    setSelectedAula(value);
-    setForm((prevForm) => ({
-      ...prevForm,
-      aula_id: value,
-    }));
-  };
 
   const header = ["Aula", "Usuario", "Topic", "Ciudad"];
   const handleDelete = async (id) => {
@@ -208,77 +76,55 @@ const adminSensor = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+
+
   };
 
-  const dataVoid = [
-    [
-      <>
-        <RNPickerSelect
-          onValueChange={(value) => setSelectedPais(value)}
-          placeholder={{ label: "Seleccione un país", value: null }}
-          items={pais.map((item) => ({
-            label: item.nombre_pais,
-            value: item.id_pais,
-          }))}
-        />
-        <RNPickerSelect
-          onValueChange={(value) => setSelectedEstado(value)}
-          placeholder={{ label: "Seleccione un estado", value: null }}
-          items={estado.map((item) => ({
-            label: item.nombre_estado,
-            value: item.id_estado,
-          }))}
-          disabled={!selectedPais}
-        />
-        <RNPickerSelect
-          onValueChange={(value) => setSelectedCiudad(value)}
-          placeholder={{ label: "Seleccione una ciudad", value: null }}
-          items={ciudad.map((item) => ({
-            label: item.nombre_ciudad,
-            value: item.id_ciudad,
-          }))}
-          disabled={!selectedEstado}
-        />
-        <RNPickerSelect
-          onValueChange={(value) => setSelectedUniversidad(value)}
-          placeholder={{ label: "Seleccione una universidad", value: null }}
-          items={universidad.map((item) => ({
-            label: item.nombre_universidad,
-            value: item.id_universidad,
-          }))}
-          disabled={!selectedCiudad}
-        />
-        <RNPickerSelect
-          onValueChange={(value) => setSelectedEdificio(value)}
-          placeholder={{ label: "Seleccione un edificio", value: null }}
-          items={edificio.map((item) => ({
-            label: item.nombre_edificio,
-            value: item.id_edificio,
-          }))}
-          disabled={!selectedUniversidad}
-        />
-        <RNPickerSelect
-          onValueChange={handleAulaChange}
-          placeholder={{ label: "Seleccione un aula", value: null }}
-          items={aula.map((item) => ({
-            label: item.nombre_aula,
-            value: item.id_aula,
-          }))}
-          disabled={!selectedEdificio}
-        />
-      </>,
-    ],
-  ];
+
+  const handlEdit = async () => {
+    try {
+      await editSensor(form);
+      router.replace("/adminSensor");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
   const [modalVisible, setModalVisible] = useState(false);
   const [modalSave, setModalSave] = useState(false);
   const [selectedSensor, setSelectedSensor] = useState(null);
   const [newSensor, setNewSensor] = useState(null);
 
+
+
+  useEffect(() => {
+    if (selectedSensor) {
+      setForm({
+        nombre: selectedSensor.nombre_sensor || "",
+        tipo_sensor: selectedSensor.tipo_sensor || "",
+        topico: selectedSensor.topico || "",
+        pais: selectedSensor.pais || "",
+        estado: selectedSensor.estado || "",
+        ciudad: selectedSensor.ciudad || "",
+        universidad: selectedSensor.universidad || "",
+        edificio: selectedSensor.edificio || "",
+        aula: selectedSensor.aula || "",
+        user_id: selectedSensor.user_id,
+        id: selectedSensor.id_sensor,
+      });
+    }
+  }, [selectedSensor]);
+
+
+
+  const handleInputChange = (name, value) => {
+    setForm(prevForm => ({ ...prevForm, [name]: value }));
+  };
+
+
   return (
     <SafeAreaView className="flex-1">
-      <LoadingScreen
-  isLoading={loading}
-  />
+      <LoadingScreen isLoading={loading} />
       <Header title={"Administrar Sensores"} />
 
       <FlatList
@@ -288,174 +134,138 @@ const adminSensor = () => {
         renderItem={({ item }) => {
           return (
             <>
-              <Card containerStyle={{ height: "auto", borderRadius: 5 }}>
-                <Text style={styles.title}>Nombre:{item.nombre_sensor}</Text>
-                <Text style={styles.subtitle}>
-                  Tipo sensor: {item.tipo_sensor}
-                </Text>
-                <View>
-                  <Text>Aula: {item.nombre_aula}</Text>
-                  <Text>Usuario: {item.correo}</Text>
-                  <Text>Topic: {item.topic}</Text>
-                  <Text>Ciudad: {item.nombre_ciudad}</Text>
-                  <Text>Universidad: {item.nombre_universidad}</Text>
-                  <Text>Edificio: {item.nombre_edificio}</Text>
-                  <Text>Fecha de creación: {item.fecha}</Text>
-                </View>
-                <View style={styles.btnContainer}>
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                      setSelectedSensor(item);
-                      setModalVisible(true)
-                    }}
-                  >
-                    <Text style={styles.buttonText}>Editar</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setSelectedSensor(item);
-                      setModalSave(true);
-
-                    }}
-                    style={[styles.button, styles.cancelButton]}
-                  >
-                    <Text style={styles.buttonText}>
-                      Eliminar
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </Card>
-              <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible && selectedSensor?.id_sensor === item.id_sensor}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text className="text-lg text-secondary font-semibold text-center">
-              Editar el sensor {item.nombre_sensor}
-            </Text>
-            <TextInput
-              defaultValue={item.nombre_sensor}
-              placeholder="Nombre del Sensor"
-              onChangeText={(text) => setForm({ ...form, nombre: text })}
-              style={styles.input}
-            ></TextInput>
-              <RNPickerSelect
-              onValueChange={(value) =>
-                setForm({ ...form, tipo_sensor: value })
-              }
-              placeholder={{
-                label: "Seleccione un tipo de sensor",
-                value: null,
-              }}
-              items={tipo_sensor.map((item) => ({
-                label: item.nombre_tipo_sensor,
-                value: item.id_tipo_sensor,
-              }))}
-            />
-            <Table>
-              <Row
-                textStyle={{
-                  fontWeight: "bold",
-                  textAlign: "center",
-                  fontSize: 18,
+              <SensorCard
+                nombre={item.nombre_sensor}
+                tipo={item.tipo_sensor}
+                aula={item.aula}
+                correo={item.correo}
+                topico={item.topic}
+                ciudad={item.ciudad}
+                universidad={item.universidad}
+                edificio={item.edificio}
+                fecha={item.fecha}
+                handlePress={() => {
+                  setModalVisible(true);
+                  setSelectedSensor(item);
                 }}
-                data={header}
+                handleDelete={() => {
+                  setModalSave(true);
+                  setSelectedSensor(item);
+                }}
               />
-               <RNPickerSelect
-               defaultValue={item.id_pais}
-          onValueChange={(value) => setSelectedPais(value)}
-          placeholder={{ label: "Seleccione un país", value: null }}
-          items={pais.map((item) => ({
-            label: item.nombre_pais,
-            value: item.id_pais,
-          }))}
-        />
-        <RNPickerSelect
-          defaultValue={item.id_estado}
-          onValueChange={(value) => setSelectedEstado(value)}
-          placeholder={{ label: "Seleccione un estado", value: null }}
-          items={estado.map((item) => ({
-            label: item.nombre_estado,
-            value: item.id_estado,
-          }))}
-          disabled={!selectedPais}
-        />
-        <RNPickerSelect
-          defaultValue={item.id_ciudad}
-          onValueChange={(value) => setSelectedCiudad(value)}
-          placeholder={{ label: "Seleccione una ciudad", value: null }}
-          items={ciudad.map((item) => ({
-            label: item.nombre_ciudad,
-            value: item.id_ciudad,
-          }))}
-          disabled={!selectedEstado}
-        />
-        <RNPickerSelect
-          defaultValue={item.id_universidad}
-          onValueChange={(value) => setSelectedUniversidad(value)}
-          placeholder={{ label: "Seleccione una universidad", value: null }}
-          items={universidad.map((item) => ({
-            label: item.nombre_universidad,
-            value: item.id_universidad,
-          }))}
-          disabled={!selectedCiudad}
-        />
-        <RNPickerSelect
-          defaultValue={item.id_edificio}
-          onValueChange={(value) => setSelectedEdificio(value)}
-          placeholder={{ label: "Seleccione un edificio", value: null }}
-          items={edificio.map((item) => ({
-            label: item.nombre_edificio,
-            value: item.id_edificio,
-          }))}
-          disabled={!selectedUniversidad}
-        />
-        <RNPickerSelect
-          defaultValue={item.id_aula}
-          onValueChange={handleAulaChange}
-          placeholder={{ label: "Seleccione un aula", value: null }}
-          items={aula.map((item) => ({
-            label: item.nombre_aula,
-            value: item.id_aula,
-          }))}
-          disabled={!selectedEdificio}
-        />
-              
-            </Table>
-            <View style={styles.btnContainer}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => setModalVisible(false)}
+
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)}
               >
-                <Icon
-                  name="check-circle"
-                  size={20}
-                  color="#FFFFFF"
-                  style={styles.icon}
-                />
-                <Text style={styles.buttonText}>Aceptar</Text>
-              </TouchableOpacity>
-              <View style={{ width: 20 }}></View>
-              <TouchableOpacity
-                style={[styles.button, styles.cancelButton]}
-                onPress={() => setModalVisible(false)}
-              >
-                <Icon
-                  name="cancel"
-                  size={20}
-                  color="#FFFFFF"
-                  style={styles.icon}
-                />
-                <Text style={styles.buttonText}>Cancelar</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+                <View style={styles.modalContainer}>
+                  <View style={styles.modalContent}>
+                    <Text className="text-lg text-secondary font-semibold text-center">
+                      Editar el sensor {selectedSensor?.nombre_sensor}
+                    </Text>
+                    <TextInput
+                      defaultValue={selectedSensor?.nombre_sensor}
+                      placeholder="Nombre del Sensor"
+                      style={styles.input}
+                     onChangeText={(text) => handleInputChange("nombre", text)}
+                    />
+
+                    <TextInput
+                      defaultValue={selectedSensor?.topic}
+                      placeholder="Topico"
+                      style={styles.input}
+                      onChangeText={(text) =>
+                        handleInputChange("topico", text)
+                      }
+                    />
+                      <TextInput
+                      defaultValue={selectedSensor?.tipo_sensor}
+                      placeholder="Tipo sensor"
+                      style={styles.input}
+                      onChangeText={(text) =>
+                        handleInputChange("tipo_sensor", text)
+                      }
+                    />
+                    <TextInput
+                      defaultValue={selectedSensor?.pais}
+                      placeholder="Pais"
+                      style={styles.input}
+                      onChangeText={(text) => 
+                        handleInputChange("pais", text)
+                      }
+                    />
+                    <TextInput
+                      defaultValue={selectedSensor?.estado}
+                      placeholder="Estado"
+                      style={styles.input}
+                      onChangeText={(text) =>
+                        handleInputChange("estado", text)
+                      }
+                    />
+                    <TextInput
+                      defaultValue={selectedSensor?.ciudad}
+                      placeholder="Ciudad"
+                      style={styles.input}
+                      onChangeText={(text) =>
+                        handleInputChange("ciudad", text)
+                        }
+                    />
+                    <TextInput
+                      defaultValue={selectedSensor?.universidad}
+                      placeholder="Universidad"
+                      style={styles.input}
+                      onChangeText={(text) =>
+                        handleInputChange("universidad", text)
+                      }
+                    />
+                    <TextInput
+                      defaultValue={selectedSensor?.edificio}
+                      placeholder="Edificio"
+                      style={styles.input}
+                      onChangeText={(text) =>
+                        handleInputChange("edificio", text)
+                      }
+                    />
+                    <TextInput
+                      defaultValue={selectedSensor?.aula}
+                      placeholder="Aula"
+                      style={styles.input}
+                      onChangeText={(text) =>
+                        handleInputChange("aula", text)
+                      }
+                    />
+                    <View style={styles.btnContainer}>
+                      <TouchableOpacity
+                        style={styles.button}
+                        onPress={handlEdit}
+                      >
+                        <Icon
+                          name="check-circle"
+                          size={20}
+                          color="#FFFFFF"
+                          style={styles.icon}
+                        />
+                        <Text style={styles.buttonText}>Aceptar</Text>
+                      </TouchableOpacity>
+                      <View style={{ width: 20 }}></View>
+                      <TouchableOpacity
+                        style={[styles.button, styles.cancelButton]}
+                        onPress={() => setModalVisible(false)}
+                      >
+                        <Icon
+                          name="cancel"
+                          size={20}
+                          color="#FFFFFF"
+                          style={styles.icon}
+                        />
+                        <Text style={styles.buttonText}>Cancelar</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </Modal>
 
               <Modal
                 animationType="slide"
@@ -502,77 +312,58 @@ const adminSensor = () => {
                 </View>
               </Modal>
               <Modal
-        animationType="slide"
-        transparent={true}
-        visible={newSensor}
-        onRequestClose={() => setNewSensor(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <TextInput
-              placeholder="Nombre del Sensor"
-              style={styles.input}
-              onChangeText={(text) => setForm({ ...form, nombre: text })}
-            ></TextInput>
-            <TextInput
-              placeholder="Topico"
-              style={styles.input}
-              onChangeText={(text) => setForm({ ...form, topic: text })}
-            ></TextInput>
-            <RNPickerSelect
-              onValueChange={(value) =>
-                setForm({ ...form, tipo_sensor: value })
-              }
-              placeholder={{
-                label: "Seleccione un tipo de sensor",
-                value: null,
-              }}
-              items={tipo_sensor.map((item) => ({
-                label: item.nombre_tipo_sensor,
-                value: item.id_tipo_sensor,
-              }))}
-            />
-            <Table>
-              <Row
-                textStyle={{
-                  fontWeight: "bold",
-                  textAlign: "center",
-                  fontSize: 18,
-                }}
-                data={header}
-              />
-              <Rows
-                textStyle={{ textAlign: "center", fontSize: 14 }}
-                data={dataVoid}
-              />
-            </Table>
-            <View style={styles.btnContainer}>
-              <TouchableOpacity style={styles.button} onPress={handleSave}>
-                <Icon
-                  name="check-circle"
-                  size={20}
-                  color="#FFFFFF"
-                  style={styles.icon}
-                />
-                <Text style={styles.buttonText}>Crear</Text>
-              </TouchableOpacity>
-              <View style={{ width: 20 }}></View>
-              <TouchableOpacity
-                style={[styles.button, styles.cancelButton]}
-                onPress={() => setModalVisible(false)}
+                animationType="slide"
+                transparent={true}
+                visible={newSensor}
+                onRequestClose={() => setNewSensor(false)}
               >
-                <Icon
-                  name="cancel"
-                  size={20}
-                  color="#FFFFFF"
-                  style={styles.icon}
-                />
-                <Text style={styles.buttonText}>Cancelar</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+                <View style={styles.modalContainer}>
+                  <View style={styles.modalContent}>
+                    <Text style={styles.title}>Agregar Sensor</Text>
+
+                    <TextInput
+                      placeholder="Nombre del Sensor"
+                      style={styles.input}
+                      onChangeText={(text) =>
+                        setForm({ ...form, nombre: text })
+                      }
+                    />
+                    <TextInput
+                      placeholder="Topico"
+                      style={styles.input}
+                      onChangeText={(text) => setForm({ ...form, topic: text })}
+                    />
+
+                    <View style={styles.btnContainer}>
+                      <TouchableOpacity
+                        style={styles.button}
+                        onPress={handleSave}
+                      >
+                        <Icon
+                          name="check-circle"
+                          size={20}
+                          color="#FFFFFF"
+                          style={styles.icon}
+                        />
+                        <Text style={styles.buttonText}>Crear</Text>
+                      </TouchableOpacity>
+                      <View style={{ width: 20 }}></View>
+                      <TouchableOpacity
+                        style={[styles.button, styles.cancelButton]}
+                        onPress={() => setModalVisible(false)}
+                      >
+                        <Icon
+                          name="cancel"
+                          size={20}
+                          color="#FFFFFF"
+                          style={styles.icon}
+                        />
+                        <Text style={styles.buttonText}>Cancelar</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </Modal>
             </>
           );
         }}
@@ -584,12 +375,12 @@ const adminSensor = () => {
       />
 
       <CustomButton
-        title="Agregar panel"
+        title="Crear Sensor "
         containerStyles={"bg-[#317B9B]"}
         textStyles={"text-lg font-semibold text-center mt-2 text-white"}
         handlePress={() => setNewSensor(true)}
       />
-     
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -608,33 +399,38 @@ const adminSensor = () => {
               style={styles.input}
               onChangeText={(text) => setForm({ ...form, topic: text })}
             ></TextInput>
-            <RNPickerSelect
-              onValueChange={(value) =>
-                setForm({ ...form, tipo_sensor: value })
-              }
-              placeholder={{
-                label: "Seleccione un tipo de sensor",
-                value: null,
-              }}
-              items={tipo_sensor.map((item) => ({
-                label: item.nombre_tipo_sensor,
-                value: item.id_tipo_sensor,
-              }))}
+            <TextInput
+              placeholder="Pais"
+              style={styles.input}
+              onChangeText={(text) => setForm({ ...form, pais: text })}
             />
-            <Table>
-              <Row
-                textStyle={{
-                  fontWeight: "bold",
-                  textAlign: "center",
-                  fontSize: 18,
-                }}
-                data={header}
-              />
-              <Rows
-                textStyle={{ textAlign: "center", fontSize: 14 }}
-                data={dataVoid}
-              />
-            </Table>
+            <TextInput
+              placeholder="Estado"
+              style={styles.input}
+              onChangeText={(text) => setForm({ ...form, estado: text })}
+            />
+
+            <TextInput
+              placeholder="Ciudad"
+              style={styles.input}
+              onChangeText={(text) => setForm({ ...form, ciudad: text })}
+            />
+            <TextInput
+              placeholder="Universidad"
+              style={styles.input}
+              onChangeText={(text) => setForm({ ...form, universidad: text })}
+            />
+            <TextInput
+              placeholder="Edificio"
+              style={styles.input}
+              onChangeText={(text) => setForm({ ...form, edificio: text })}
+            />
+            <TextInput
+              placeholder="Aula"
+              style={styles.input}
+              onChangeText={(text) => setForm({ ...form, aula: text })}
+            />
+
             <View style={styles.btnContainer}>
               <TouchableOpacity style={styles.button} onPress={handleSave}>
                 <Icon
@@ -689,16 +485,8 @@ const styles = StyleSheet.create({
   cancelButton: {
     backgroundColor: "#E53935",
   },
-  buttonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-  },
-  btnContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    marginTop: 30,
-  },
+  
+ 
   modalContainer: {
     flex: 1,
     justifyContent: "center",

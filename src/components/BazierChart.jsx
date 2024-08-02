@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Dimensions, Text } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
-// Función para formatear la fecha
+// Función para formatear la hora actual
 const formatCurrentTime = () => {
   const now = new Date();
   const day = now.toLocaleDateString('es-ES', { weekday: 'short', day: '2-digit', month: 'short' });
@@ -10,12 +10,12 @@ const formatCurrentTime = () => {
   return `${day} ${time}`;
 };
 
-const MyChart = ({ data, labels }) => {
+const BazierChart = ({ data, labels }) => {
   // Verificar y manejar si las props están definidas y tienen datos
   if (!data || !labels || !Array.isArray(data) || !Array.isArray(labels) || data.length !== labels.length) {
     return (
       <View>
-        <Text className="text-center">Grafica de Linea </Text>
+        <Text className="text-center">Grafica de Bazier </Text>
         <LineChart
           data={{
             labels: ['Data not available'],
@@ -27,7 +27,7 @@ const MyChart = ({ data, labels }) => {
             legend: ["Simulated Data"]
           }}
           width={Dimensions.get("window").width - 30}
-          height={270}
+          height={450}
           chartConfig={{
             backgroundColor: "#e26a00",
             backgroundGradientFrom: "#fb8c00",
@@ -62,18 +62,16 @@ const MyChart = ({ data, labels }) => {
             marginVertical: 8,
             borderRadius: 16
           }}
+          bezier
         />
+        <Text style={{ textAlign: 'center', marginTop: 10 }}>No hay datos disponibles</Text>
       </View>
     );
   }
 
-  // Manejo de valores nulos en los datos y etiquetas
-  const safeData = data.map(value => (value != null ? value : 0)); // Reemplaza null con 0
-  const safeLabels = labels.map(label => (label != null ? label : 'Sin etiqueta')); // Reemplaza null con texto predeterminado
-
   // Limitar datos a los últimos 10
-  const limitedData = safeData.slice(-10);
-  const limitedLabels = safeLabels.slice(-10);
+  const limitedData = data.slice(-10);
+  const limitedLabels = labels.slice(-10);
 
   // Generar etiquetas con la hora actual para cada punto
   const formattedLabels = limitedLabels.map(label => `${label} - ${formatCurrentTime()}`);
@@ -82,19 +80,14 @@ const MyChart = ({ data, labels }) => {
     return <View><Text>No hay datos disponibles</Text></View>;
   }
 
-  // Filtrar etiquetas y datos para mostrar solo uno de cada n
-  const step = Math.ceil(formattedLabels.length / 10); // Ajusta el divisor según la cantidad deseada
-  const filteredLabels = formattedLabels.filter((_, index) => index % step === 0);
-  const filteredData = limitedData.filter((_, index) => index % step === 0);
-
   return (
     <View>
       <LineChart
         data={{
-          labels: filteredLabels,
+          labels: formattedLabels,
           datasets: [
             {
-              data: filteredData
+              data: limitedData
             }
           ],
           legend: ["Humedad"]
@@ -137,6 +130,7 @@ const MyChart = ({ data, labels }) => {
           marginVertical: 8,
           borderRadius: 16
         }}
+        bezier
       />
        {data == 0 && (
         <Text style={{ textAlign: "center", marginTop: 10 }}>
@@ -148,4 +142,4 @@ const MyChart = ({ data, labels }) => {
   );
 };
 
-export default MyChart;
+export default BazierChart;

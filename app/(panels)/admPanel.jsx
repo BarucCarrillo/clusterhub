@@ -1,21 +1,21 @@
-import React, {useState, useEffect} from "react";
-import {View, Text, FlatList} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../src/components/header";
 import AdmCardDash from "../../src/components/AdmCardDash";
 import { useGlobalContext } from "../../context/GlobalProvider";
-import { getDashboardUser } from "../../lib";
+import { getDashboardUser, deleteDashboard } from "../../lib";
 import { StatusBar } from "expo-status-bar";
+import { router } from "expo-router";
 import CustomButton from "../../src/components/CustomButton";
 
-
 const admPanel = () => {
-    const [data, setData] = useState(null);
+  const [data, setData] = useState(null);
   const { user } = useGlobalContext();
   // console.log(user.id)
 
   let id = user.id;
- 
+
   const fetchDashboard = async () => {
     try {
       const response = await getDashboardUser(id);
@@ -28,6 +28,17 @@ const admPanel = () => {
   useEffect(() => {
     fetchDashboard();
   }, []);
+
+  const handleDelete = async (id_dashboard) => {
+    try {
+      const response = await deleteDashboard(id_dashboard);
+      if (response.status === "success") {
+        fetchDashboard();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -46,6 +57,14 @@ const admPanel = () => {
                   title={item.nombre_dashboard}
                   description={item.descripcion}
                   image={item.image}
+                  handleDelete={handleDelete}
+                  id={item.id_dashboard}
+                  handleEdit={() =>
+                    router.push({
+                      pathname: "/editPanel",
+                      params: { id: item.id_dashboard },
+                    })
+                  }
                 />
               );
             }}
@@ -56,12 +75,9 @@ const admPanel = () => {
             }}
             ListEmptyComponent={() => {
               return (
-              <>
-              <Text>
-                No tienes paneles creados
-              </Text>
-              
-              </>
+                <>
+                  <Text>No tienes paneles creados</Text>
+                </>
               );
             }}
           />
@@ -69,6 +85,6 @@ const admPanel = () => {
       </SafeAreaView>
     </>
   );
-}
+};
 
-export default admPanel
+export default admPanel;

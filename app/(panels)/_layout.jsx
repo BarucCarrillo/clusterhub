@@ -7,7 +7,9 @@ const panelLayout = () => {
             <Stack>
                 <Stack.Screen name='newPanel' options={{headerShown: false}}/>
                 <Stack.Screen name="admPanel" options={{headerShown: false}}/>
-                <Stack.Screen name="editPanel" options={{headerShown: false}}/>
+                <Stack.Screen name="editPanel"
+                getId={({ params }) => params.id}
+                 options={{headerShown: false}}/>
             </Stack>
         </>
     )
