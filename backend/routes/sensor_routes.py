@@ -221,4 +221,13 @@ def get_sensor_grafica(id):
 
 
 
-
+@sensor_bp.route('/sensor_data_info', methods=['GET'])
+def get_sensor_data_info():
+    connection = get_db_connection()
+    with connection.cursor() as cursor:
+        cursor.callproc("cp_infoSensorData")
+        sensor_data = cursor.fetchall()
+    connection.close()
+    if sensor_data:
+        return jsonify(sensor_data), 200
+    return jsonify({"error": "Sensor data not found"}), 404

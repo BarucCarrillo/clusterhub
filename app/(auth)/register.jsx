@@ -44,10 +44,8 @@ const Register = () => {
 
   return (
     <ScrollView style={styles.rectangleView}>
-      <Header />
       <View style={styles.formContainer}>
-        <Text style={styles.labelTitle}>Registra tus datos</Text>
-
+      <Header title={'Registra tus Datos'}/>
         <Text style={styles.label}>Nombre</Text>
         <TextInput
          style={styles.input}

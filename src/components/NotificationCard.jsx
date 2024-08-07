@@ -1,18 +1,15 @@
-import { View, Text } from "react-native";
+import { View, } from "react-native";
 import React from "react";
+import Notification from "./notification";
+
+//LLAMA A LA NOTIFICACIÓN Y LA MUESTRA EN UNA VISTA
 
 const NotificationCard = () => {
   return (
-    <View className="flex flex-col ">
+    <View style={{width: "90%",}}>
       <View>
-        <Text className="text-secondary font-semibold">Flores - Casa</Text>
-        <Text className="text-[#868686]">
-          Se detecto temperaturas bajas, por favor encender las lamparas uv o
-          sistema de calefacción.
-        </Text>
+        <Notification/>
       </View>
-      
-      <Text className="text-[10px] ml-auto text-[#868686]">Fecha : 24-06-24</Text>
     </View>
   );
 };

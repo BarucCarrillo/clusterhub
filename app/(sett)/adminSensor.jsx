@@ -58,7 +58,7 @@ const adminSensor = () => {
 
 
 
-  const header = ["Aula", "Usuario", "Topic", "Ciudad"];
+  const header = ["", "", "", ""];
   const handleDelete = async (id) => {
     try {
       await deleteSensor(id);
@@ -129,7 +129,7 @@ const adminSensor = () => {
 
       <FlatList
         keyExtractor={(item) => item.id_sensor}
-        className="px-4 mb-10"
+        className="px-4 mb-4"
         data={sensor}
         renderItem={({ item }) => {
           return (
@@ -439,12 +439,12 @@ const adminSensor = () => {
                   color="#FFFFFF"
                   style={styles.icon}
                 />
-                <Text style={styles.buttonText}>Crear</Text>
+                <Text style={styles.buttonText}>Guardar</Text>
               </TouchableOpacity>
               <View style={{ width: 20 }}></View>
               <TouchableOpacity
                 style={[styles.button, styles.cancelButton]}
-                onPress={() => setModalVisible(false)}
+                onPress={() => setNewSensor(false)}
               >
                 <Icon
                   name="cancel"
