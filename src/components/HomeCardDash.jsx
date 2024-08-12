@@ -3,7 +3,7 @@ import { View, Text, Image } from 'react-native';
 import CustomButton from "../../src/components/CustomButton";
 import { router } from "expo-router";
 
-const HomeCardDash = ({ title, description, image }) => {
+const HomeCardDash = ({ title, description, image,handlePress2 }) => {
   return (
     <View className=" pl-4 pr-4 overflow-hidden  mb-5">
       <View className="bg-white rounded-lg  p-4 h-[180px] w-full shadow-lg ">
@@ -20,7 +20,7 @@ const HomeCardDash = ({ title, description, image }) => {
                     textStyles={
                       "text-lg font-semibold text-center mt-2 text-white"
                     }
-                    handlePress={() => router.push("/viewDash")}
+                    handlePress={handlePress2}
                   />
       </View>
     </View>

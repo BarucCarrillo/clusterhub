@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  FlatList,
+  ScrollView,
+} from "react-native";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../src/components/header";
@@ -15,18 +23,15 @@ const newPanel = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [widgetVisible, setWidgetVisible] = useState(false);
   const [saveVisible, setSaveVisible] = useState(false);
-  const [selectedWidgets, setSelectedWidgets] = useState(new Set()); // Almacena los IDs seleccionados
-  const {insertWidgetsInDashboard} = useGlobalContext();
+  const [selectedWidgets, setSelectedWidgets] = useState(new Set());
+  const { insertWidgetsInDashboard } = useGlobalContext();
 
-  // console.log(user.id);
   const [form, setForm] = useState({
     nombre: "",
     descripcion: "",
     destacado: 0,
     id: user.id,
   });
-
-
 
   const handleWidgetSelect = (id) => {
     setSelectedWidgets((prevSelected) => {
@@ -38,40 +43,57 @@ const newPanel = () => {
           newSelected.add(id);
         }
       }
-
       return newSelected;
     });
   };
 
-
-
+  const handleCancelWidgets = () => {
+    setSelectedWidgets(new Set());
+    setWidgetVisible(false);
+  };
 
   const submit = async () => {
     try {
       const response = await createDashboard(form);
-      if (response.status === 'success'){
+      if (response.status === "success") {
         const dashboardId = response.id;
         const widgets = Array.from(selectedWidgets);
-        console.log(widgets + " widgets submit");
         await insertWidgetsInDashboard(dashboardId, widgets);
         setSaveVisible(true);
         router.push("/panel");
-        // console.log(response.id)
-
-        // console.log(response);
-      }else{
+      } else {
         console.log("Error al crear el panel");
       }
-   
     } catch (error) {
-      console.log(error + " error");
+      console.log(error);
     }
   };
 
+  const renderSelectedWidget = ({ item }) => (
+    <Text style={styles.widgetText}>{item}</Text>
+  );
 
-  console.log(selectedWidgets); 
+  const getWidgetName = (id) => {
+    switch (id) {
+      case 1:
+        return "Gráfica de Barras";
+      case 2:
+        return "Gráfica de Pastel";
+      case 3:
+        return "Gráfica de Líneas";
+      case 4:
+        return "Gráfica de Progreso";
+      case 5:
+        return "Gráfica de Bazier";
+      case 6:
+        return "Gráfica de Stack";
+      case 7:
+        return "Gráfica de Contributor";
+      default:
+        return "Widget no encontrado";
+    }
+  };
 
-  
   return (
     <SafeAreaView>
       <View>
@@ -94,6 +116,12 @@ const newPanel = () => {
               title={"Agregar Widget"}
               handlePress={() => setWidgetVisible(true)}
             />
+            <Text className="text-center mt-2">Widgets Seleccionados</Text>
+            <View>
+              {Array.from(selectedWidgets).map((widget) => (
+                <Text className="text-center m-2" key={widget.id}>{getWidgetName(widget)}</Text>
+              ))}
+            </View>
           </Card>
         </View>
         <View style={styles.container}>
@@ -142,53 +170,60 @@ const newPanel = () => {
         visible={widgetVisible}
         onRequestClose={() => setWidgetVisible(false)}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text
-              style={{ fontSize: 20, color: "#317B9B", fontWeight: "bold" }}
-            >
-              Selecciona los widgets que deseas que aparezcan en el panel
-            </Text>
-            <Text
-              style={{
-                fontSize: 18,
-                color: "#95D7CA",
-                fontWeight: "bold",
-                marginBottom: 20,
-              }}
-            >
-              Máximo de 4 widgets
-            </Text>
-            <CardGrid selectedWidgets={selectedWidgets} onSelect={handleWidgetSelect} />
-            <View style={styles.container}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => setSaveVisible(true)}
+        <ScrollView contentContainerStyle={styles.modalScrollContent}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text
+                style={{ fontSize: 20, color: "#317B9B", fontWeight: "bold" }}
               >
-                <Icon
-                  name="check-circle"
-                  size={20}
-                  color="#FFFFFF"
-                  style={styles.icon}
-                />
-                <Text style={styles.buttonText}>Aceptar</Text>
-              </TouchableOpacity>
-              <View style={{ width: 20 }}></View>
-              <TouchableOpacity
-                style={[styles.button, styles.cancelButton]}
-                onPress={() => setWidgetVisible(false)}
+                Selecciona los widgets que deseas que aparezcan en el panel
+              </Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: "#95D7CA",
+                  fontWeight: "bold",
+                  marginBottom: 20,
+                }}
               >
-                <Icon
-                  name="cancel"
-                  size={20}
-                  color="#FFFFFF"
-                  style={styles.icon}
-                />
-                <Text style={styles.buttonText}>Cancelar</Text>
-              </TouchableOpacity>
+                Máximo de 4 widgets
+              </Text>
+
+              <CardGrid
+                selectedWidgets={selectedWidgets}
+                onSelect={handleWidgetSelect}
+              />
+
+              <View style={styles.container}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => setWidgetVisible(false)}
+                >
+                  <Icon
+                    name="check-circle"
+                    size={20}
+                    color="#FFFFFF"
+                    style={styles.icon}
+                  />
+                  <Text style={styles.buttonText}>Aceptar</Text>
+                </TouchableOpacity>
+                <View style={{ width: 20 }}></View>
+                <TouchableOpacity
+                  style={[styles.button, styles.cancelButton]}
+                  onPress={handleCancelWidgets}
+                >
+                  <Icon
+                    name="cancel"
+                    size={20}
+                    color="#FFFFFF"
+                    style={styles.icon}
+                  />
+                  <Text style={styles.buttonText}>Cancelar</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
+        </ScrollView>
       </Modal>
 
       <Modal
@@ -215,11 +250,13 @@ const newPanel = () => {
 };
 
 const styles = StyleSheet.create({
+  cardContainer: {
+    paddingBottom: 20,
+  },
   container: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    marginTop: 50,
   },
   button: {
     flexDirection: "row",
@@ -252,11 +289,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
   },
+  modalScrollContent: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   modalTitle: {
     fontSize: 20,
-    marginBottom: 20,
     fontFamily: "Roboto",
     fontWeight: "bold",
+    textAlign: "center",
+  },
+  widgetText: {
+    fontSize: 16,
+    marginVertical: 4,
   },
 });
 
