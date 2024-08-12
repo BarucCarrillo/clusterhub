@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     borderRadius: 140,
   },
   cardContainer: {
-    marginTop: 1,
+    marginTop: 20,
   },
   scrollCards: {
     paddingLeft: 5,
